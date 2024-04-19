@@ -1,14 +1,14 @@
 const bookshelf = require('../bookshelf');
 
-const Vendor = bookshelf.model('Vendor', {
-    tableName: 'vendors'
+const Seller = bookshelf.model('Seller', {
+    tableName: 'sellers'
 })
 
 const Token = bookshelf.model('Token', {
     tableName: 'tokens',
-    vendors: function() {
-        return this.hasMany('Vendor');
+    sellers: function() {
+        return this.hasMany('Seller');
     }
 })
 
-module.exports = { Vendor, Token }
+module.exports = { Seller, Token }

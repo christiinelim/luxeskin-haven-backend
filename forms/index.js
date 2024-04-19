@@ -32,21 +32,18 @@ const createSignupForm = () => {
         }),
         'email': fields.email({
             errorAfterField: true, widget: widgets.email(), required: validators.required('%s is required'),
-            validators: [validators.email('Please enter a valid email address')],
-            errorMessages: {required: 'Email is required'}
+            validators: [validators.email('Please enter a valid email address')]
         }),
         'password': fields.password({
-            required: true, errorAfterField: true,
-            validators: [validators.regexp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,32}$/)],
-            errorMessages: {required: 'Password is required'}
+            errorAfterField: true, required: validators.required('%s is required'),
+            validators: [validators.regexp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,32}$/)]
         }),
         'confirm_password': fields.password({
-            label: 'Confirm Password', required: true, errorAfterField: true,
-            validators: [validators.matchField('password', { message: 'Input do not match password input' })],
-            errorMessages: {required: 'Input is required'}
+            label: 'Confirm Password', errorAfterField: true, required: validators.required('%s is required'),
+            validators: [validators.matchField('password')],
         }),
         'contact': fields.number({
-            required: true, errorAfterField: true, errorMessages: {required: 'Contact is required'}
+            errorAfterField: true, required: validators.required('%s is required')
         })
     })
 }

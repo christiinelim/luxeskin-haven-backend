@@ -15,19 +15,19 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('vendors', {
+  return db.createTable('sellers', {
     id: { primaryKey: true, type: 'int', unsigned: true, autoIncrement: true },
     username: { type: 'string', length: 100, notNull: true },
     email: { type:'string', length: 320, notNull: true },
     password: { type: 'string', length: 80, notNull: true },
     contact: { type: 'string', length: 20, notNull: true },
-    verified: { type: 'string', length: 100, notNull: true },
-    created_at: { type: 'datetime', notNull: true }
+    verified: { type: 'string', length: 10, notNull: true, defaultValue: "No" },
+    created_at: { type: 'dateTime', notNull: true }
   });
 };
 
 exports.down = function(db) {
-  return db.dropTable('vendors');
+  return db.dropTable('sellers');
 };
 
 exports._meta = {

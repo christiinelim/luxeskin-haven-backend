@@ -21,11 +21,11 @@ exports.up = function(db) {
     token: { type: 'int', unsigned: true, length: 20, notNull: true },
     created_at: { type: 'datetime', notNull: true },
     expires_at: { type: 'datetime', notNull: true },
-    vendor_id : {
+    seller_id : {
       type: 'int', notNull: true, unsigned: true, 
       foreignKey: {
-        name: 'tokens_vendors_fk',
-        table:'vendors',
+        name: 'tokens_sellers_fk',
+        table:'sellers',
         mapping:'id',
         rules: { onDelete: 'CASCADE', onUpdate:'RESTRICT'}
       }
@@ -34,7 +34,7 @@ exports.up = function(db) {
 };
 
 exports.down = async function(db) {
-  await db.removeForeignKey('tokens', 'tokens_vendors_fk');
+  await db.removeForeignKey('tokens', 'tokens_sellers_fk');
   await db.dropTable('tokens');
 };
 
