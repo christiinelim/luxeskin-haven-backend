@@ -16,11 +16,13 @@ const createSeller = async (sellerData) => {
 
 const getSellerByEmail = async (email) => {
     try {
-        return await Seller.where({
+        const seller = await Seller
+            .where({
                 'email': email
             }).fetch({
                 require: false
             })
+        return seller
     } catch (error) {
         throw new Error(error)
     }
@@ -28,12 +30,41 @@ const getSellerByEmail = async (email) => {
 
 const getSellerByEmailAndPassword = async (email, password) => {
     try {
-        return await Seller.where({
-            'email': email,
-            'password': password
+        const seller = await Seller
+            .where({
+                'email': email,
+                'password': password
+            }).fetch({
+                require: false
+            })
+        return seller
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const getSellerById = async (sellerId) => {
+    try {
+        const seller = await Seller.where({
+            'id': sellerId,
         }).fetch({
             require: false
         })
+        return seller
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const updateVerificationStatus = async (sellerId) => {
+    try {
+        const seller = await getSellerById(sellerId);
+        if (seller) {
+            seller.set('verified', 'Yes');
+            await seller.save();
+            return true;
+        }
+        return false;
     } catch (error) {
         throw new Error(error)
     }
@@ -63,13 +94,13 @@ const forgotPassword = async (email) => {
     // }
 }
 
-const updateSeller = async (sellerData) => {
+// const updateSeller = async (sellerData) => {
     
 
-    cartItem.set('quantity', newQuantity);
-        await cartItem.save();
-        return true;
-}
+//     cartItem.set('quantity', newQuantity);
+//         await cartItem.save();
+//         return true;
+// }
 
 
 
@@ -82,5 +113,7 @@ const updateSeller = async (sellerData) => {
 module.exports = {
     createSeller,
     getSellerByEmail,
-    getSellerByEmailAndPassword
+    getSellerByEmailAndPassword,
+    updateVerificationStatus,
+    getSellerById
 }

@@ -22,6 +22,7 @@ const sendTokenEmail = async (email) => {
             text: `Your verification code is: ${verificationToken}`
         };
         await transporter.sendMail(mailOptions);
+        return verificationToken;
     } catch (error) {
         throw new Error(error)
     }
