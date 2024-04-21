@@ -6,12 +6,6 @@ const sellerServices = require('../services/seller_service');
 
 router.post('/create', async (req, res) => {
     try {
-        const existingSeller = await sellerServices.getSellerByEmail(req.body.email);
-
-        if (existingSeller) {
-            return res.status(200).json({ error: "Email is already registered with an account" });
-        }
-
         const { password, ...rest } = req.body;
         const hashedPassword = getHashedPassword(password);
         const sellerData = {
@@ -19,8 +13,12 @@ router.post('/create', async (req, res) => {
             password: hashedPassword,
         };
 
-        const newSeller = await sellerServices.createSeller(sellerData);
-        res.status(200).json({ data: newSeller });
+        const response = await sellerServices.createSeller(sellerData);
+        if (response.error) {
+            res.status(200).json({ error: response.error });
+        } else {
+            res.status(200).json({ data: response });
+        }
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
