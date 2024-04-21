@@ -13,6 +13,8 @@
   "dependencies": {
     "bookshelf": "^1.2.0",
     "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "csurf": "^1.11.0",
     "db-migrate": "^0.11.14",
     "db-migrate-mysql": "^2.3.2",
@@ -21,6 +23,7 @@
     "express-session": "^1.18.0",
     "forms": "^1.3.2",
     "hbs": "^4.2.0",
+    "jsonwebtoken": "^9.0.2",
     "knex": "^3.1.0",
     "mysql": "^2.18.1",
     "nodemailer": "^6.9.13",

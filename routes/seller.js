@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const { getHashedPassword } = require('../utils/index')
+const { getHashedPassword, generateAccessToken } = require('../utils/index')
 const sellerServices = require('../services/seller_service');
+const { authenticateWithJWT } = require('../middlewares/index')
 
 router.post('/create', async (req, res) => {
     try {
@@ -51,6 +52,8 @@ router.post('/login', async (req, res) => {
                 res.status(403).json({ error: response.error });
             }
         } else {
+            const token = generateAccessToken(response.id, response.email);
+            response.token = token;
             res.status(200).json({ data: response });
         }
     } catch (error) {
@@ -88,8 +91,7 @@ router.post('/update-password', async (req, res) => {
     }
 });
 
-// add middleware for check if authenticated for updateProfile
-router.put('/update-profile/:sellerId', async (req, res) => {
+router.put('/update-profile/:sellerId', [ authenticateWithJWT ], async (req, res) => {
     const sellerId = req.params.sellerId;
     const { password, ...rest } = req.body;
     const hashedPassword = getHashedPassword(password);
@@ -105,8 +107,7 @@ router.put('/update-profile/:sellerId', async (req, res) => {
     }
 });
 
-// add middleware for check if authenticated for updateProfile
-router.delete('/delete/:sellerId', async (req, res) => {
+router.delete('/delete/:sellerId', [ authenticateWithJWT ], async (req, res) => {
     const sellerId = req.params.sellerId;
     const response = await sellerServices.deleteSeller(sellerId);
     if (response.error) {
