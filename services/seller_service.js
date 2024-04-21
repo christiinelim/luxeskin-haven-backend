@@ -6,7 +6,7 @@ const createSeller = async (sellerData) => {
     try {
         const existingSeller = await getSellerByEmail(sellerData.email);
 
-        if (existingSeller) {
+        if (!existingSeller.error) {
             return { error: "Email is already registered with an account" };
         }
         
@@ -15,7 +15,8 @@ const createSeller = async (sellerData) => {
         await tokenService.createToken({
             'type': 'Verification',
             token,
-            'seller_id': newSeller.id
+            'seller_id': newSeller.id,
+            'profile': 'Seller'
         });
         
         return newSeller;
@@ -26,7 +27,11 @@ const createSeller = async (sellerData) => {
 
 const getSellerByEmail = async (email) => {
     try {
-        return await sellerDataLayer.getSellerByEmail(email);
+        const seller = await sellerDataLayer.getSellerByEmail(email);
+        if (seller) {
+            return seller.toJSON();
+        }
+        return { error: "Account does not exist" };
     } catch (error) {
         throw new Error(error)
     }
@@ -55,13 +60,12 @@ const updateVerificationStatus = async (sellerId) => {
     }
 }
 
-const verifyToken = async (sellerEmail, tokenData) => {
+const verifySeller = async (sellerEmail, tokenData) => {
     try {
-        const tokenExists = await tokenService.getTokenBySellerAndToken(tokenData);
+        const tokenExists = await tokenService.getToken(tokenData);
         if (tokenExists) {
             const tokenResponse = tokenExists.toJSON();
             if (tokenResponse.expires_at > new Date()) {
-                // destroy and set account to verified
                 const response = await updateVerificationStatus(tokenData.seller_id);
                 if (response) {
                     await tokenService.deleteToken(tokenExists);
@@ -70,14 +74,13 @@ const verifyToken = async (sellerEmail, tokenData) => {
                 return { error: "Unable to verify as account does not exist" }; 
             }
 
-            // destroy and resend
-            console.log("expire")
             await tokenService.deleteToken(tokenExists);
             const token = await emailService.sendTokenEmail(sellerEmail);
             await tokenService.createToken({
                 'type': 'Verification',
                 token,
-                'seller_id': tokenData.seller_id
+                'seller_id': tokenData.seller_id,
+                'profile': 'Seller'
             });
 
             return { error: "Token has expired" }; 
@@ -88,10 +91,91 @@ const verifyToken = async (sellerEmail, tokenData) => {
     }
 }
 
+const initiatePasswordReset = async (email) => {
+    try {
+        const existingSeller = await getSellerByEmail(email);
+
+        if (existingSeller.error) {
+            return { error: "Account does not exist" }
+        }
+
+        const token = await emailService.sendTokenEmail(email);
+        await tokenService.createToken({
+            'type': 'Reset',
+            token,
+            'seller_id': existingSeller.id,
+            'profile': 'Seller'
+        });
+        
+        return "Reset token sent";
+    } catch (error) {
+        throw new Error(error)
+    } 
+};
+
+const updatePassword = async (sellerEmail, password, tokenData) => {
+    try {
+        const tokenExists = await tokenService.getToken(tokenData);
+        if (tokenExists) {
+            const tokenResponse = tokenExists.toJSON();
+            if (tokenResponse.expires_at > new Date()) {
+                const response = await sellerDataLayer.updatePassword(sellerEmail, password);
+                if (response) {
+                    await tokenService.deleteToken(tokenExists);
+                    return "Password update success"
+                }
+                return { error: "Unable to update password as account does not exist" }; 
+            }
+
+            await tokenService.deleteToken(tokenExists);
+            const token = await emailService.sendTokenEmail(sellerEmail);
+            await tokenService.createToken({
+                'type': 'Reset',
+                token,
+                'seller_id': tokenData.seller_id,
+                'profile': 'Seller'
+            });
+
+            return { error: "Token has expired" }; 
+        }
+        return { error: "Invalid token" };
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const updateSeller = async (sellerId, updatedSellerData) => {
+    try {
+        const response = await sellerDataLayer.updateSeller(sellerId, updatedSellerData);
+        if (response) {
+            return updatedSellerData
+        }
+        return { error: "Unable to update" }; 
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const deleteSeller = async (sellerId) => {
+    try {
+        const response = await sellerDataLayer.deleteSeller(sellerId);
+        if (response) {
+            return "Account deleted successfully"
+        }
+        return { error: "Unable to delete account" }; 
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 module.exports = {
     createSeller,
     getSellerByEmail,
     getSellerByEmailAndPassword,
-    verifyToken,
-    updateVerificationStatus
+    verifySeller,
+    updateVerificationStatus,
+    initiatePasswordReset,
+    updatePassword,
+    updateSeller,
+    deleteSeller
 }

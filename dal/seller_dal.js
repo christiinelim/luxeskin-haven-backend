@@ -70,37 +70,46 @@ const updateVerificationStatus = async (sellerId) => {
     }
 }
 
-const forgotPassword = async (email) => {
+const updatePassword = async (email, password) => {
     try {
-        const existingSeller = await getSellerByEmail(email);
-        if (existingSeller) {
-            return true
-        } else {
-            return 
+        const seller = await getSellerByEmail(email);
+        if (seller) {
+            seller.set('password', password);
+            await seller.save();
+            return true;
         }
+        return false;
     } catch (error) {
-
+        throw new Error(error)
     }
-
-
-    // try {
-    //     const cartItem = await getCartItemByUserAndProduct(userId, productId);
-    // if (cartItem) {
-    //     cartItem.set('quantity', newQuantity);
-    //     await cartItem.save();
-    //     return true;
-    // }
-    // return false;
-    // }
 }
 
-// const updateSeller = async (sellerData) => {
-    
+const updateSeller = async (sellerId, updatedSellerData) => {
+    try {
+        const seller = await getSellerById(sellerId);
+        if (seller) {
+            seller.set(updatedSellerData);
+            await seller.save();
+            return true;
+        }
+        return false;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
 
-//     cartItem.set('quantity', newQuantity);
-//         await cartItem.save();
-//         return true;
-// }
+const deleteSeller = async (sellerId) => {
+    try {
+        const seller = await getSellerById(sellerId);
+        if (seller) {
+            await seller.destroy();
+            return true
+        }
+        return false;
+    } catch (error) {
+        throw new Error(error)
+    }
+}
 
 
 
@@ -115,5 +124,8 @@ module.exports = {
     getSellerByEmail,
     getSellerByEmailAndPassword,
     updateVerificationStatus,
-    getSellerById
+    getSellerById,
+    updatePassword,
+    updateSeller,
+    deleteSeller
 }

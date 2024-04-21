@@ -18,6 +18,7 @@ exports.up = function(db) {
   return db.createTable('tokens', {
     id: { primaryKey: true, type: 'int', unsigned: true, autoIncrement: true },
     type: { type:'string', length: 50, notNull: true },
+    profile: { type:'string', length: 50, notNull: true },
     token: { type: 'int', unsigned: true, length: 20, notNull: true },
     created_at: { type: 'datetime', notNull: true },
     expires_at: { type: 'datetime', notNull: true },

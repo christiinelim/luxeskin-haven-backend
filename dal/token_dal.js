@@ -27,7 +27,7 @@ const deleteToken = async (token) => {
     } 
 }
 
-const getTokenBySellerAndToken = async (tokenData) => {
+const getToken = async (tokenData) => {
     try {
         const token = await Token
             .where(tokenData)
@@ -42,6 +42,6 @@ const getTokenBySellerAndToken = async (tokenData) => {
 
 module.exports = { 
     createToken, 
-    getTokenBySellerAndToken, 
+    getToken, 
     deleteToken 
 }

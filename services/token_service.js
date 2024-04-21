@@ -8,9 +8,9 @@ const createToken = async (tokenData) => {
     }
 }
 
-const getTokenBySellerAndToken = async (tokenData) => {
+const getToken = async (tokenData) => {
     try {
-        const tokenExists = await tokenDataLayer.getTokenBySellerAndToken(tokenData);
+        const tokenExists = await tokenDataLayer.getToken(tokenData);
         if (tokenExists) {
             return tokenExists
         }
@@ -30,6 +30,6 @@ const deleteToken = async (token) => {
 
 module.exports = { 
     createToken, 
-    getTokenBySellerAndToken,
+    getToken,
     deleteToken 
 }
