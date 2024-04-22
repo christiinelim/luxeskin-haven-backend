@@ -48,6 +48,8 @@ router.post('/login', async (req, res) => {
         if (response.error) {
             if (response.error === "Wrong email or password") {
                 res.status(200).json({ error: response.error });
+            } else if (response.error === "Account not verified") {
+                res.status(200).json(response);
             } else {
                 res.status(200).json({ error: response.error });
             }
@@ -92,28 +94,50 @@ router.post('/update-password', async (req, res) => {
 });
 
 router.put('/update-profile/:sellerId', [ authenticateWithJWT ], async (req, res) => {
-    const sellerId = req.params.sellerId;
-    const { password, ...rest } = req.body;
-    const hashedPassword = getHashedPassword(password);
-    const sellerData = {
-        ...rest,
-        password: hashedPassword,
-    };
-    const response = await sellerServices.updateSeller(sellerId, sellerData);
-    if (response.error) {
-        res.status(200).json({ error: response.error });
-    } else {
-        res.status(200).json({ data: response });
+    try {
+        const sellerId = req.params.sellerId;
+        const { password, ...rest } = req.body;
+        const hashedPassword = getHashedPassword(password);
+        const sellerData = {
+            ...rest,
+            password: hashedPassword,
+        };
+        const response = await sellerServices.updateSeller(sellerId, sellerData);
+        if (response.error) {
+            res.status(200).json({ error: response.error });
+        } else {
+            res.status(200).json({ data: response });
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 });
 
 router.delete('/delete/:sellerId', [ authenticateWithJWT ], async (req, res) => {
-    const sellerId = req.params.sellerId;
-    const response = await sellerServices.deleteSeller(sellerId);
-    if (response.error) {
-        res.status(200).json({ error: response.error });
-    } else {
-        res.status(200).json({ data: response });
+    try {
+        const sellerId = req.params.sellerId;
+        const response = await sellerServices.deleteSeller(sellerId);
+        if (response.error) {
+            res.status(200).json({ error: response.error });
+        } else {
+            res.status(200).json({ data: response });
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+router.get('/profile/:sellerId', [ authenticateWithJWT ], async (req, res) => {
+    try {
+        const sellerId = req.params.sellerId;
+        const response = await sellerServices.getSellerById(sellerId);
+        if (response.error) {
+            res.status(200).json({ error: response.error });
+        } else {
+            res.status(200).json({ data: response });
+        }
+    } catch (error) {
+        res.status(400).json({ error: error.message });
     }
 });
 

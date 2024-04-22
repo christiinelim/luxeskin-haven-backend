@@ -11,10 +11,9 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const verificationToken = Math.floor(Math.random() * 900000) + 100000;
-
 const sendTokenEmail = async (email) => {
     try {
+        const verificationToken = Math.floor(Math.random() * 900000) + 100000;
         const mailOptions = {
             from: process.env.TOKEN_EMAIL,
             to: email,

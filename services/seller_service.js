@@ -44,7 +44,10 @@ const getSellerByEmailAndPassword = async (email, password) => {
         if (!seller) {
             return { error: "Wrong email or password" };
         } else if (seller.toJSON().verified !== 'Yes') {
-            return { error: "Account not verified" };
+            return { 
+                error: "Account not verified",
+                data: seller.toJSON()
+            };
         }
         return seller.toJSON();
     } catch (error) {
@@ -168,6 +171,18 @@ const deleteSeller = async (sellerId) => {
     }
 }
 
+const getSellerById = async (sellerId) => {
+    try {
+        const response = await sellerDataLayer.getSellerById(sellerId);
+        if (response) {
+            return response
+        }
+        return { error: "Account does not exist" }; 
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 module.exports = {
     createSeller,
     getSellerByEmail,
@@ -177,5 +192,6 @@ module.exports = {
     initiatePasswordReset,
     updatePassword,
     updateSeller,
-    deleteSeller
+    deleteSeller,
+    getSellerById
 }

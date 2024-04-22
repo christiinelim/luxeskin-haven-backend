@@ -111,14 +111,6 @@ const deleteSeller = async (sellerId) => {
     }
 }
 
-
-
-
-
-
-
-
-
 module.exports = {
     createSeller,
     getSellerByEmail,
