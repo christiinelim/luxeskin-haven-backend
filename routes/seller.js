@@ -47,9 +47,9 @@ router.post('/login', async (req, res) => {
         
         if (response.error) {
             if (response.error === "Wrong email or password") {
-                res.status(404).json({ error: response.error });
+                res.status(200).json({ error: response.error });
             } else {
-                res.status(403).json({ error: response.error });
+                res.status(200).json({ error: response.error });
             }
         } else {
             const token = generateAccessToken(response.id, response.email);
