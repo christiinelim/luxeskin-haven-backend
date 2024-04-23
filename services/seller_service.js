@@ -1,6 +1,7 @@
 const sellerDataLayer = require('../dal/seller_dal');
 const emailService = require('../services/email_service');
 const tokenService = require('../services/token_service');
+const { comparePasswords } = require('../utils');
 
 const createSeller = async (sellerData) => {
     try {
@@ -39,17 +40,23 @@ const getSellerByEmail = async (email) => {
 
 const getSellerByEmailAndPassword = async (email, password) => {
     try {
-        const seller = await sellerDataLayer.getSellerByEmailAndPassword(email, password);
-        
+        const seller = await sellerDataLayer.getSellerByEmail(email);
+
         if (!seller) {
             return { error: "Wrong email or password" };
-        } else if (seller.toJSON().verified !== 'Yes') {
-            return { 
-                error: "Account not verified",
-                data: seller.toJSON()
-            };
+        } else {
+            const passwordMatch = await comparePasswords(password, seller.toJSON().password);
+            if (passwordMatch) {
+                if (seller.toJSON().verified !== 'Yes') {
+                    return { 
+                        error: "Account not verified",
+                        data: seller.toJSON()
+                    };
+                }
+                return seller.toJSON();
+            } 
+            return { error: "Wrong email or password" };
         }
-        return seller.toJSON();
     } catch (error) {
         throw new Error(error)
     }

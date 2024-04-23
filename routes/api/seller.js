@@ -9,7 +9,7 @@ const blacklistedTokenServices = require('../../services/blacklisted_tokens_serv
 router.post('/create', async (req, res) => {
     try {
         const { password, ...rest } = req.body;
-        const hashedPassword = getHashedPassword(password);
+        const hashedPassword = await getHashedPassword(password);
         const sellerData = {
             ...rest,
             password: hashedPassword,
@@ -43,8 +43,7 @@ router.post('/verify-account', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        const hashedPassword = getHashedPassword(password);
-        const response = await sellerServices.getSellerByEmailAndPassword(email, hashedPassword);
+        const response = await sellerServices.getSellerByEmailAndPassword(email, password);
         
         if (response.error) {
             if (response.error === "Wrong email or password") {

@@ -1,10 +1,19 @@
-const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-const getHashedPassword = (plainPassword) => {
-    const sha256 = crypto.createHash('sha256');
-    const hashedPassword = sha256.update(plainPassword).digest('base64');
+const getHashedPassword = async (password) => {
+    const hashedPassword = await bcrypt.hash(password, 12);
     return hashedPassword;
+};
+
+const comparePasswords = async (plainPassword, hashedPassword) => {
+    try {
+        const passwordMatch = await bcrypt.compare(plainPassword, hashedPassword);
+        return passwordMatch;
+    } catch (error) {
+        console.error('Error comparing passwords:', error);
+        return false;
+    }
 };
 
 const generateAccessToken = (id, email, tokenSecret, expiry) => {
@@ -18,5 +27,6 @@ const generateAccessToken = (id, email, tokenSecret, expiry) => {
 
 module.exports = {
     getHashedPassword,
+    comparePasswords,
     generateAccessToken
 }

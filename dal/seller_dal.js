@@ -28,21 +28,6 @@ const getSellerByEmail = async (email) => {
     }
 }
 
-const getSellerByEmailAndPassword = async (email, password) => {
-    try {
-        const seller = await Seller
-            .where({
-                'email': email,
-                'password': password
-            }).fetch({
-                require: false
-            })
-        return seller
-    } catch (error) {
-        throw new Error(error)
-    }
-}
-
 const getSellerById = async (sellerId) => {
     try {
         const seller = await Seller.where({
@@ -114,7 +99,6 @@ const deleteSeller = async (sellerId) => {
 module.exports = {
     createSeller,
     getSellerByEmail,
-    getSellerByEmailAndPassword,
     updateVerificationStatus,
     getSellerById,
     updatePassword,
