@@ -15,7 +15,7 @@ const app = express();
 wax.on(hbs.handlebars);
 wax.setLayoutPath('./views/layouts');
 
-app.use(cors());
+app.use(cors()); // MUST BE BEFORE SESSIONS
 // app.use(cookieParser());
 app.use(express.json());
 app.set('view engine', 'hbs');
@@ -32,12 +32,15 @@ app.use(
 
 main = async () => {
     const adminRoutes = require('./routes/admin');
-    const sellerRoutes = require('./routes/seller');
     // const csrfRoutes = require('./routes/csrf');
+
+    const api = {
+        sellerRoutes: require('./routes/api/seller')
+    }
 
     app.use('/admin', adminRoutes);
     // app.use('/api/csrf', csrfRoutes);
-    app.use('/api/seller', sellerRoutes)
+    app.use('/api/seller', api.sellerRoutes)
 }
 
 main();

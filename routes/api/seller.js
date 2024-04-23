@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const { getHashedPassword, generateAccessToken } = require('../utils/index')
-const sellerServices = require('../services/seller_service');
-const { authenticateWithJWT } = require('../middlewares/index')
+const { getHashedPassword, generateAccessToken } = require('../../utils/index');
+const { authenticateWithJWT, authenticateJWTRefreshToken } = require('../../middlewares/index');
+const sellerServices = require('../../services/seller_service');
+const blacklistedTokenServices = require('../../services/blacklisted_tokens_service')
 
 router.post('/create', async (req, res) => {
     try {
@@ -54,8 +55,10 @@ router.post('/login', async (req, res) => {
                 res.status(200).json({ error: response.error });
             }
         } else {
-            const token = generateAccessToken(response.id, response.email);
-            response.token = token;
+            const accessToken = generateAccessToken(response.id, response.email, process.env.JWT_ACCESS_TOKEN_SECRET, "10m");
+            const refreshToken = generateAccessToken(response.id, response.email, process.env.JWT_REFRESH_TOKEN_SECRET, "1h");
+            response.accessToken = accessToken;
+            response.refreshToken = refreshToken;
             res.status(200).json({ data: response });
         }
     } catch (error) {
@@ -93,7 +96,7 @@ router.post('/update-password', async (req, res) => {
     }
 });
 
-router.put('/update-profile/:sellerId', [ authenticateWithJWT ], async (req, res) => {
+router.put('/update-profile/:sellerId', authenticateWithJWT, async (req, res) => {
     try {
         const sellerId = req.params.sellerId;
         const { password, ...rest } = req.body;
@@ -113,7 +116,7 @@ router.put('/update-profile/:sellerId', [ authenticateWithJWT ], async (req, res
     }
 });
 
-router.delete('/delete/:sellerId', [ authenticateWithJWT ], async (req, res) => {
+router.delete('/delete/:sellerId', authenticateWithJWT, async (req, res) => {
     try {
         const sellerId = req.params.sellerId;
         const response = await sellerServices.deleteSeller(sellerId);
@@ -127,7 +130,7 @@ router.delete('/delete/:sellerId', [ authenticateWithJWT ], async (req, res) => 
     }
 });
 
-router.get('/profile/:sellerId', [ authenticateWithJWT ], async (req, res) => {
+router.get('/profile/:sellerId', authenticateWithJWT, async (req, res) => {
     try {
         const sellerId = req.params.sellerId;
         const response = await sellerServices.getSellerById(sellerId);
@@ -136,6 +139,19 @@ router.get('/profile/:sellerId', [ authenticateWithJWT ], async (req, res) => {
         } else {
             res.status(200).json({ data: response });
         }
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+router.post('/refresh-token', authenticateJWTRefreshToken);
+
+router.post('/logout', authenticateWithJWT, async (req, res) => {
+    try {
+        const { refreshToken } = req.body;
+        await blacklistedTokenServices.createBlacklistedToken(refreshToken);
+        res.status(200).json({ data: "Refresh token blacklisted" });
+
     } catch (error) {
         res.status(400).json({ error: error.message });
     }

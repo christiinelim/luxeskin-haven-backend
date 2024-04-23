@@ -7,12 +7,12 @@ const getHashedPassword = (plainPassword) => {
     return hashedPassword;
 };
 
-const generateAccessToken = (id, email) => {
+const generateAccessToken = (id, email, tokenSecret, expiry) => {
     return jwt.sign({
         'id': id,
         'email': email
-    }, process.env.JWT_TOKEN_SECRET, {
-        'expiresIn': '1h'
+    }, tokenSecret, {
+        'expiresIn': expiry
     })
 }
 
