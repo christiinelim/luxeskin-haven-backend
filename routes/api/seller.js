@@ -82,7 +82,7 @@ router.post('/forgot-password', async (req, res) => {
 router.post('/update-password', async (req, res) => {
     try {    
         const { email, password, ...tokenData } = req.body
-        const hashedPassword = getHashedPassword(password);
+        const hashedPassword = await getHashedPassword(password);
         const response = await sellerServices.updatePassword(email, hashedPassword, tokenData);
 
         if (response.error) {
@@ -99,7 +99,7 @@ router.put('/update-profile/:sellerId', authenticateWithJWT, async (req, res) =>
     try {
         const sellerId = req.params.sellerId;
         const { password, ...rest } = req.body;
-        const hashedPassword = getHashedPassword(password);
+        const hashedPassword = await getHashedPassword(password);
         const sellerData = {
             ...rest,
             password: hashedPassword,
@@ -131,6 +131,7 @@ router.delete('/delete/:sellerId', authenticateWithJWT, async (req, res) => {
 
 router.get('/profile/:sellerId', authenticateWithJWT, async (req, res) => {
     try {
+        console.log("get seller called")
         const sellerId = req.params.sellerId;
         const response = await sellerServices.getSellerById(sellerId);
         if (response.error) {

@@ -117,7 +117,10 @@ const initiatePasswordReset = async (email) => {
             'profile': 'Seller'
         });
         
-        return "Reset token sent";
+        return { 
+            id: existingSeller.id,
+            email: existingSeller.email
+        };
     } catch (error) {
         throw new Error(error)
     } 

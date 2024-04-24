@@ -21,6 +21,9 @@ exports.up = function(db) {
     email: { type:'string', length: 320, notNull: true },
     password: { type: 'string', length: 80, notNull: true },
     contact: { type: 'string', length: 20, notNull: true },
+    instagram: { type: 'string', length: 255, notNull: true, defaultValue: "Not stated" },
+    tiktok: { type: 'string', length: 255, notNull: true, defaultValue: "Not stated" },
+    website: { type: 'string', length: 255, notNull: true, defaultValue: "Not stated" },
     verified: { type: 'string', length: 10, notNull: true, defaultValue: "No" },
     created_at: { type: 'dateTime', notNull: true }
   });

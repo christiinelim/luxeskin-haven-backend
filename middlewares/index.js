@@ -10,7 +10,7 @@ const authenticateWithJWT = (req, res, next) => {
         try {
             jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET, (error, payload) => {
                 if (error) {
-                    res.status(400).json({ error });
+                    res.status(401).json({ error });
                 } else {
                     req.payload = payload;
                     next();
@@ -20,7 +20,7 @@ const authenticateWithJWT = (req, res, next) => {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     } else {
-        res.status(400).json({ error: "Unauthorized, please login" });
+        res.status(401).json({ error: "Unauthorized, please login" });
     }
 };
 
@@ -31,7 +31,7 @@ const authenticateJWTRefreshToken = (req, res, next) => {
     try {
         jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN_SECRET, async (error) => {
             if (error) {
-                res.status(400).json({ error });
+                res.status(401).json({ error });
             } else {
                 const blacklistedToken = await blacklistedTokenServices.getBlacklistedToken(refreshToken);
             
