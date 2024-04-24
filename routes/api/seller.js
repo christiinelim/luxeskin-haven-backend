@@ -131,7 +131,6 @@ router.delete('/delete/:sellerId', authenticateWithJWT, async (req, res) => {
 
 router.get('/profile/:sellerId', authenticateWithJWT, async (req, res) => {
     try {
-        console.log("get seller called")
         const sellerId = req.params.sellerId;
         const response = await sellerServices.getSellerById(sellerId);
         if (response.error) {
