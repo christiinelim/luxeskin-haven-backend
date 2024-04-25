@@ -24,6 +24,7 @@ exports.up = function(db) {
     instagram: { type: 'string', length: 255, notNull: true, defaultValue: "Not stated" },
     tiktok: { type: 'string', length: 255, notNull: true, defaultValue: "Not stated" },
     website: { type: 'string', length: 255, notNull: true, defaultValue: "Not stated" },
+    image: { type: 'string', length: 255 },
     verified: { type: 'string', length: 10, notNull: true, defaultValue: "No" },
     created_at: { type: 'dateTime', notNull: true }
   });

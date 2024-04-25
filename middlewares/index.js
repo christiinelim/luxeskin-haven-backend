@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
 const blacklistedTokenServices = require('../services/blacklisted_tokens_service');
 const { generateAccessToken } = require('../utils');
 
@@ -58,4 +59,12 @@ const csrfErrorHandler = (error, req, res, next) => {
     }
 }; 
 
-module.exports = { authenticateWithJWT, csrfErrorHandler, authenticateJWTRefreshToken }
+const storage = multer.diskStorage({
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+});
+
+const upload = multer({storage: storage});
+
+module.exports = { authenticateWithJWT, authenticateJWTRefreshToken, csrfErrorHandler, upload }

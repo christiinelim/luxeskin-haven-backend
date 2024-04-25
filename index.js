@@ -35,12 +35,14 @@ main = async () => {
     // const csrfRoutes = require('./routes/csrf');
 
     const api = {
-        sellerRoutes: require('./routes/api/seller')
+        sellerRoutes: require('./routes/api/seller'),
+        cloudinaryRoutes: require('./routes/api/cloudinary')
     }
 
     app.use('/admin', adminRoutes);
     // app.use('/api/csrf', csrfRoutes);
-    app.use('/api/seller', api.sellerRoutes)
+    app.use('/api/seller', api.sellerRoutes);
+    app.use('/api/cloudinary', api.cloudinaryRoutes)
 }
 
 main();
