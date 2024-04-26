@@ -41,12 +41,12 @@ const Product = bookshelf.model('Product', {
         return this.belongsToMany('SkinType');
     },
     product_discount: function() {
-        return this.belongsTo('ProductDiscount');
+        return this.belongsTo('Discount');
     }
 })
 
-const ProductDiscount = bookshelf.model('ProductDiscount', {
-    tableName: 'product_discounts',
+const Discount = bookshelf.model('Discount', {
+    tableName: 'discounts',
     products: function() {
         return this.hasMany('Product');
     }
@@ -59,5 +59,5 @@ module.exports = {
     Category,
     SkinType,
     Product,
-    ProductDiscount
+    Discount
 }

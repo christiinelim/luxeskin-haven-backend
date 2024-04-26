@@ -55,9 +55,24 @@ const deleteProduct = async (productId) => {
     }
 }
 
+const updateProduct = async (productId, productData) => {
+    try {
+        const product = await getProductById(productId);
+        if (product) {
+            product.set(productData);
+            await product.save();
+            return product;
+        }
+        return false
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 module.exports = {
     createProduct,
     getProductById,
     getProductBySeller,
-    deleteProduct
+    deleteProduct,
+    updateProduct
 }

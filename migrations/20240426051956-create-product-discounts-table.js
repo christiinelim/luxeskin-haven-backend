@@ -15,7 +15,7 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('product_discounts', {
+  return db.createTable('discounts', {
     id : { type: 'int', unsigned: true, primaryKey: true, autoIncrement: true },
     discount_percentage: { type: 'decimal(5,2)', unsigned: true, notNull: true },
     start_date: { type: 'date', notNull: true },
@@ -23,7 +23,7 @@ exports.up = function(db) {
     product_id: {
       type:'int', notNull: true, unsigned: true,
       foreignKey: {
-        name: 'product_discounts_products_fk',
+        name: 'discounts_products_fk',
         table: 'products',
         mapping: 'id',
         rules: { onDelete: 'CASCADE', onUpdate:'RESTRICT'}
@@ -33,8 +33,8 @@ exports.up = function(db) {
 };
 
 exports.down = async function(db) {
-  await db.removeForeignKey('product_discounts', 'product_discounts_products_fk');
-  await db.dropTable('product_discounts');
+  await db.removeForeignKey('discounts', 'discounts_products_fk');
+  await db.dropTable('discounts');
 };
 
 exports._meta = {

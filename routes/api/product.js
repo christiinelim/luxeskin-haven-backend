@@ -62,8 +62,8 @@ router.delete('/:productId', async (req, res) => {
 router.put('/:productId', async (req, res) => {
     try {
         const productId = req.params.productId;
-        const productData = req.body
-        const response = await productServices.updateProduct(productId, productData);
+        const { skin_types, ...productData } = req.body;
+        const response = await productServices.updateProduct(productId, skin_types, productData);
 
         if (response.error) {
             res.status(200).json({ error: response.error });
