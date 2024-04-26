@@ -36,6 +36,18 @@ const getProductBySeller = async (sellerId) => {
     }
 }
 
+const getProductByDiscountId = async (discountId) => {
+    try {
+        const response = await productDataLayer.getProductByDiscountId(discountId);
+        if (response) {
+            return response
+        }
+        return { error: "No product found" }; 
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 const deleteProduct = async (productId) => {
     try {
         const response = await productDataLayer.deleteProduct(productId);
@@ -62,10 +74,21 @@ const updateProduct = async (productId, skinTypes, productData) => {
     }
 }
 
+const updateProductDiscount = async (productId, discountData) => {
+    try {
+        const product = await productDataLayer.updateProduct(productId, discountData);        
+        return product
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 module.exports = {
     createProduct,
     getProductById,
     getProductBySeller,
+    getProductByDiscountId,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    updateProductDiscount
 }

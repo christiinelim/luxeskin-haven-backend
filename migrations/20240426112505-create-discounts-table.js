@@ -19,22 +19,12 @@ exports.up = function(db) {
     id : { type: 'int', unsigned: true, primaryKey: true, autoIncrement: true },
     discount_percentage: { type: 'decimal(5,2)', unsigned: true, notNull: true },
     start_date: { type: 'date', notNull: true },
-    end_date: { type: 'date', notNull: true },
-    product_id: {
-      type:'int', notNull: true, unsigned: true,
-      foreignKey: {
-        name: 'discounts_products_fk',
-        table: 'products',
-        mapping: 'id',
-        rules: { onDelete: 'CASCADE', onUpdate:'RESTRICT'}
-      }
-    }
+    end_date: { type: 'date', notNull: true }
   });
 };
 
 exports.down = async function(db) {
-  await db.removeForeignKey('discounts', 'discounts_products_fk');
-  await db.dropTable('discounts');
+  return db.dropTable('discounts');
 };
 
 exports._meta = {

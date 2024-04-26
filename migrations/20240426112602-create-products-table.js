@@ -23,7 +23,6 @@ exports.up = function(db) {
     description: { type:'text', notNull: true },
     ingredients: { type:'text', notNull: true },
     refund_policy: { type:'text', notNull: true },
-    discount: { type:'string', length: 20, notNull: true, defaultValue: "No" },
     created_at: { type: 'dateTime', notNull: true },
     seller_id : {
       type: 'int', notNull: true, unsigned: true, 
@@ -42,6 +41,15 @@ exports.up = function(db) {
         mapping:'id',
         rules: { onDelete: 'CASCADE', onUpdate:'RESTRICT'}
       }
+    },
+    discount_id: {
+      type:'int', unsigned: true,
+      foreignKey: {
+        name: 'discounts_products_fk',
+        table: 'discounts',
+        mapping: 'id',
+        rules: { onDelete: 'SET NULL', onUpdate:'RESTRICT'}
+      }
     }
   });
 };
@@ -49,6 +57,7 @@ exports.up = function(db) {
 exports.down = async function(db) {
   await db.removeForeignKey('products', 'products_sellers_fk');
   await db.removeForeignKey('products', 'categories_products_fk');
+  await db.removeForeignKey('products', 'discounts_products_fk');
   await db.dropTable('products');
 };
 

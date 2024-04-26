@@ -40,7 +40,7 @@ const Product = bookshelf.model('Product', {
     skin_types: function() {
         return this.belongsToMany('SkinType');
     },
-    product_discount: function() {
+    discount: function() {
         return this.belongsTo('Discount');
     }
 })
@@ -48,7 +48,7 @@ const Product = bookshelf.model('Product', {
 const Discount = bookshelf.model('Discount', {
     tableName: 'discounts',
     products: function() {
-        return this.hasMany('Product');
+        return this.belongsToMany('Product');
     }
 })
 

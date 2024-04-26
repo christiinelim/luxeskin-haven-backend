@@ -19,7 +19,7 @@ const getProductById = async (productId) => {
         const product = await Product.where({
             'id': productId,
         }).fetch({
-            withRelated: ['category', 'skin_types', 'seller'],
+            withRelated: ['category', 'skin_types', 'seller', 'discount'],
             require: false
         })
         return product
@@ -32,8 +32,21 @@ const getProductBySeller = async (sellerId) => {
     try {
         const product = await Product.where({
             'seller_id': sellerId,
+        }).fetchAll({
+            withRelated: ['category', 'skin_types', 'discount'],
+            require: false
+        })
+        return product
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const getProductByDiscountId = async (discountId) => {
+    try {
+        const product = await Product.where({
+            'discount_id': discountId,
         }).fetch({
-            withRelated: ['category', 'skin_types'],
             require: false
         })
         return product
@@ -73,6 +86,7 @@ module.exports = {
     createProduct,
     getProductById,
     getProductBySeller,
+    getProductByDiscountId,
     deleteProduct,
     updateProduct
 }
