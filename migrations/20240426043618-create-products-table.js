@@ -18,12 +18,13 @@ exports.up = function(db) {
   return db.createTable('products', {
     id: { type:'int', unsigned: true, autoIncrement: true, primaryKey: true },
     name: { type:'string', length: 255, notNull: true },
-    availability: { type:'int', unsigned: true, notNull: true },
+    stocks_on_hand: { type:'int', unsigned: true, notNull: true },
     cost: { type:'decimal(10,2)', unsigned: true, notNull: true },
     description: { type:'text', notNull: true },
     ingredients: { type:'text', notNull: true },
     refund_policy: { type:'text', notNull: true },
     discount: { type:'string', length: 20, notNull: true, defaultValue: "No" },
+    created_at: { type: 'dateTime', notNull: true },
     seller_id : {
       type: 'int', notNull: true, unsigned: true, 
       foreignKey: {

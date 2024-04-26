@@ -57,5 +57,7 @@ module.exports = {
     Token, 
     BlacklistedToken,
     Category,
-    SkinType
+    SkinType,
+    Product,
+    ProductDiscount
 }

@@ -6,7 +6,7 @@ const { authenticateWithJWT, authenticateJWTRefreshToken } = require('../../midd
 const sellerServices = require('../../services/seller_service');
 const blacklistedTokenServices = require('../../services/blacklisted_tokens_service')
 
-router.post('/create', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { password, ...rest } = req.body;
         const hashedPassword = await getHashedPassword(password);
@@ -95,7 +95,7 @@ router.post('/update-password', async (req, res) => {
     }
 });
 
-router.put('/update-profile/:sellerId', authenticateWithJWT, async (req, res) => {
+router.put('/:sellerId', authenticateWithJWT, async (req, res) => {
     try {
         const sellerId = req.params.sellerId;
         const { password, ...rest } = req.body;
@@ -115,7 +115,7 @@ router.put('/update-profile/:sellerId', authenticateWithJWT, async (req, res) =>
     }
 });
 
-router.delete('/delete/:sellerId', authenticateWithJWT, async (req, res) => {
+router.delete('/:sellerId', authenticateWithJWT, async (req, res) => {
     try {
         const sellerId = req.params.sellerId;
         const response = await sellerServices.deleteSeller(sellerId);
@@ -129,7 +129,7 @@ router.delete('/delete/:sellerId', authenticateWithJWT, async (req, res) => {
     }
 });
 
-router.get('/profile/:sellerId', authenticateWithJWT, async (req, res) => {
+router.get('/:sellerId', authenticateWithJWT, async (req, res) => {
     try {
         const sellerId = req.params.sellerId;
         const response = await sellerServices.getSellerById(sellerId);
