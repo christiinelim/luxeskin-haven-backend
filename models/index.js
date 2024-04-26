@@ -15,4 +15,47 @@ const BlacklistedToken = bookshelf.model('BlacklistedToken',{
     tableName:'blacklisted_tokens',
 })
 
-module.exports = { Seller, Token, BlacklistedToken }
+const Category = bookshelf.model('Category', {
+    tableName: 'categories',
+    products: function() {
+        return this.hasMany('Product');
+    }
+})
+
+const SkinType = bookshelf.model('SkinType', {
+    tableName: 'skin_types',
+    products: function() {
+        return this.belongsToMany('Product');
+    }
+})
+
+const Product = bookshelf.model('Product', {
+    tableName: 'products',
+    category: function() {
+        return this.belongsTo('Category');
+    },
+    seller: function() {
+        return this.belongsTo('Seller');
+    },
+    skin_types: function() {
+        return this.belongsToMany('SkinType');
+    },
+    product_discount: function() {
+        return this.belongsTo('ProductDiscount');
+    }
+})
+
+const ProductDiscount = bookshelf.model('ProductDiscount', {
+    tableName: 'product_discounts',
+    products: function() {
+        return this.hasMany('Product');
+    }
+})
+
+module.exports = { 
+    Seller, 
+    Token, 
+    BlacklistedToken,
+    Category,
+    SkinType
+}
