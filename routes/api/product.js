@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const productServices = require('../../services/product_service');
+const categoryServices = require('../../services/category_service');
+const skinTypeServices = require('../../services/skin_types_services');
+const { authenticateWithJWT } = require('../../middlewares/index');
 
 router.post('/', async (req, res) => {
     try {
@@ -9,6 +12,24 @@ router.post('/', async (req, res) => {
         const response = await productServices.createProduct(skin_types, productData);
         res.status(200).json({ data: response });
 
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+router.get('/categories', async (req, res) => {
+    try {
+        const response = await categoryServices.getAllCategories();
+        res.status(200).json({ data: response });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+router.get('/skin-types', async (req, res) => {
+    try {
+        const response = await skinTypeServices.getAllSkinTypes();
+        res.status(200).json({ data: response });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
@@ -59,7 +80,7 @@ router.delete('/:productId', async (req, res) => {
     }
 });
 
-router.put('/:productId', async (req, res) => {
+router.put('/:productId', authenticateWithJWT, async (req, res) => {
     try {
         const productId = req.params.productId;
         const { skin_types, ...productData } = req.body;

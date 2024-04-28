@@ -17,7 +17,17 @@ const updateSkinTypes = async (skinTypes, product) => {
     }
 }
 
+const getAllSkinTypes = async () => {
+    try {
+        const response = await skinTypesDataLayer.getAllSkinTypes();
+        return response
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 module.exports = {
     attachSkinTypes,
-    updateSkinTypes
+    updateSkinTypes,
+    getAllSkinTypes
 }
