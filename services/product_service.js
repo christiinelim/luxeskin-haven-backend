@@ -48,6 +48,15 @@ const getProductByDiscountId = async (discountId) => {
     }
 }
 
+const getAllProducts = async () => {
+    try {
+        const response = await productDataLayer.getAllProducts();
+        return response
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 const deleteProduct = async (productId) => {
     try {
         const response = await productDataLayer.deleteProduct(productId);
@@ -88,6 +97,7 @@ module.exports = {
     getProductById,
     getProductBySeller,
     getProductByDiscountId,
+    getAllProducts,
     deleteProduct,
     updateProduct,
     updateProductDiscount

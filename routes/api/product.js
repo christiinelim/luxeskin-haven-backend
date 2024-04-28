@@ -65,6 +65,15 @@ router.get('/seller/:sellerId', async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        const response = await productServices.getAllProducts();
+        res.status(200).json({ data: response });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 router.delete('/:productId', async (req, res) => {
     try {
         const productId = req.params.productId;

@@ -55,6 +55,17 @@ const getProductByDiscountId = async (discountId) => {
     }
 }
 
+const getAllProducts = async () => {
+    try {
+        const products = await Product.fetchAll({
+            require: true
+        })
+        return products
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 const deleteProduct = async (productId) => {
     try {
         const product = await getProductById(productId);
@@ -87,6 +98,7 @@ module.exports = {
     getProductById,
     getProductBySeller,
     getProductByDiscountId,
+    getAllProducts,
     deleteProduct,
     updateProduct
 }
