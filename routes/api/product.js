@@ -50,6 +50,21 @@ router.get('/:productId', async (req, res) => {
     }
 });
 
+router.get('/public/:productId', async (req, res) => {
+    try {
+        const productId = req.params.productId;
+        const response = await productServices.getProductById(productId);
+        if (response.error) {
+            res.status(200).json({ error: response.error });
+        } else {
+            res.status(200).json({ data: response });
+        }
+
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 router.get('/seller/:sellerId', async (req, res) => {
     try {
         const sellerId = req.params.sellerId;

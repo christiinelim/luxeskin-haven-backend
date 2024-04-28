@@ -58,6 +58,7 @@ const getProductByDiscountId = async (discountId) => {
 const getAllProducts = async () => {
     try {
         const products = await Product.fetchAll({
+            withRelated: ['category', 'skin_types', 'seller', 'discount'],
             require: true
         })
         return products
