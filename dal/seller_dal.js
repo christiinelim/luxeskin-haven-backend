@@ -16,12 +16,11 @@ const createSeller = async (sellerData) => {
 
 const getSellerByEmail = async (email) => {
     try {
-        const seller = await Seller
-            .where({
-                'email': email
-            }).fetch({
-                require: false
-            })
+        const seller = await Seller .where({
+            'email': email
+        }).fetch({
+            require: false
+        })
         return seller
     } catch (error) {
         throw new Error(error)

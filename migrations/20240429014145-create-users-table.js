@@ -23,7 +23,8 @@ exports.up = function(db) {
     first_name: { type: 'string', length: 50, notNull: true },
     last_name: { type: 'string', length: 50, notNull: true },
     contact: { type: 'string', length: 20, notNull: true },
-    address: { type:'string', length: 255, notNull: true, defaultValue: "" },
+    address: { type:'string', length: 255, notNull: true, defaultValue: "Not Stated" },
+    image: { type: 'string', length: 255 },
     verified: { type: 'string', length: 10, notNull: true, defaultValue: "No" },
     created_at: { type: 'datetime', notNull: true }
   });
