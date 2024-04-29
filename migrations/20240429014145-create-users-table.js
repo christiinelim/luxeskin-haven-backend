@@ -15,24 +15,24 @@ exports.setup = function(options, seedLink) {
 };
 
 exports.up = function(db) {
-  return db.createTable('sellers', {
+  return db.createTable('users', {
     id: { primaryKey: true, type: 'int', unsigned: true, autoIncrement: true },
     username: { type: 'string', length: 100, notNull: true },
     email: { type:'string', length: 320, notNull: true },
     password: { type: 'string', length: 80, notNull: true },
+    first_name: { type: 'string', length: 50, notNull: true },
+    last_name: { type: 'string', length: 50, notNull: true },
     contact: { type: 'string', length: 20, notNull: true },
-    instagram: { type: 'string', length: 255, notNull: true, defaultValue: "Not stated" },
-    tiktok: { type: 'string', length: 255, notNull: true, defaultValue: "Not stated" },
-    website: { type: 'string', length: 255, notNull: true, defaultValue: "Not stated" },
-    image: { type: 'string', length: 255 },
+    address: { type:'string', length: 255, notNull: true, defaultValue: "" },
     verified: { type: 'string', length: 10, notNull: true, defaultValue: "No" },
     created_at: { type: 'datetime', notNull: true }
   });
 };
 
 exports.down = function(db) {
-  return db.dropTable('sellers');
+  return db.dropTable('users');
 };
+
 
 exports._meta = {
   "version": 1

@@ -8,6 +8,9 @@ const Token = bookshelf.model('Token', {
     tableName: 'tokens',
     sellers: function() {
         return this.hasMany('Seller');
+    },
+    users: function() {
+        return this.hasMany('User');
     }
 })
 
@@ -52,6 +55,10 @@ const Discount = bookshelf.model('Discount', {
     }
 })
 
+const User = bookshelf.model('User', {
+    tableName: 'users'
+})
+
 module.exports = { 
     Seller, 
     Token, 
@@ -59,5 +66,6 @@ module.exports = {
     Category,
     SkinType,
     Product,
-    Discount
+    Discount,
+    User
 }

@@ -23,10 +23,19 @@ exports.up = function(db) {
     created_at: { type: 'datetime', notNull: true },
     expires_at: { type: 'datetime', notNull: true },
     seller_id : {
-      type: 'int', notNull: true, unsigned: true, 
+      type: 'int', unsigned: true, 
       foreignKey: {
         name: 'tokens_sellers_fk',
         table:'sellers',
+        mapping:'id',
+        rules: { onDelete: 'CASCADE', onUpdate:'RESTRICT'}
+      }
+    },
+    user_id : {
+      type: 'int', unsigned: true, 
+      foreignKey: {
+        name: 'tokens_users_fk',
+        table:'users',
         mapping:'id',
         rules: { onDelete: 'CASCADE', onUpdate:'RESTRICT'}
       }
@@ -36,6 +45,7 @@ exports.up = function(db) {
 
 exports.down = async function(db) {
   await db.removeForeignKey('tokens', 'tokens_sellers_fk');
+  await db.removeForeignKey('tokens', 'tokens_users_fk');
   await db.dropTable('tokens');
 };
 

@@ -25,7 +25,7 @@ exports.up = function(db) {
     ingredients: { type:'text', notNull: true },
     refund_policy: { type:'text', notNull: true },
     active: { type: 'string', length: 10, notNull: true, defaultValue: "Yes" },
-    created_at: { type: 'dateTime', notNull: true },
+    created_at: { type: 'datetime', notNull: true },
     seller_id : {
       type: 'int', notNull: true, unsigned: true, 
       foreignKey: {

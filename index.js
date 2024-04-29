@@ -38,7 +38,8 @@ main = async () => {
         sellerRoutes: require('./routes/api/seller'),
         productRoutes: require('./routes/api/product'),
         discountRoutes: require('./routes/api/discount'),
-        cloudinaryRoutes: require('./routes/api/cloudinary')
+        cloudinaryRoutes: require('./routes/api/cloudinary'),
+        userRoutes: require('./routes/api/user'),
     }
 
     app.use('/admin', adminRoutes);
@@ -46,7 +47,8 @@ main = async () => {
     app.use('/api/seller', api.sellerRoutes);
     app.use('/api/product', api.productRoutes);
     app.use('/api/discount', api.discountRoutes);
-    app.use('/api/cloudinary', api.cloudinaryRoutes)
+    app.use('/api/cloudinary', api.cloudinaryRoutes);
+    app.use('/api/user', api.userRoutes);
 }
 
 main();

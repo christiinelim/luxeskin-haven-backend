@@ -3,19 +3,19 @@ const router = express.Router();
 
 const { getHashedPassword, generateAccessToken } = require('../../utils');
 const { authenticateWithJWT, authenticateJWTRefreshToken } = require('../../middlewares');
-const sellerServices = require('../../services/seller_service');
+const userServices = require('../../services/user_service');
 const blacklistedTokenServices = require('../../services/blacklisted_tokens_service')
 
 router.post('/', async (req, res) => {
     try {
         const { password, ...rest } = req.body;
         const hashedPassword = await getHashedPassword(password);
-        const sellerData = {
+        const userData = {
             ...rest,
             password: hashedPassword,
         };
 
-        const response = await sellerServices.createSeller(sellerData);
+        const response = await userServices.createUser(userData);
         if (response.error) {
             res.status(200).json({ error: response.error });
         } else {
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 router.post('/verify-account', async (req, res) => {
     try {     
         const { email, ...tokenData } = req.body
-        const response = await sellerServices.verifySeller(email, tokenData);
+        const response = await userServices.verifyUser(email, tokenData);
         if (response.error) {
             res.status(200).json({ error: response.error });
         } else {
@@ -43,7 +43,7 @@ router.post('/verify-account', async (req, res) => {
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
-        const response = await sellerServices.getSellerByEmailAndPassword(email, password);
+        const response = await userServices.getUserByEmailAndPassword(email, password);
         
         if (response.error) {
             if (response.error === "Wrong email or password") {
@@ -65,10 +65,9 @@ router.post('/login', async (req, res) => {
     }
 });
 
-
 router.post('/forgot-password', async (req, res) => {
     try {    
-        const response = await sellerServices.initiatePasswordReset(req.body.email);
+        const response = await userServices.initiatePasswordReset(req.body.email);
 
         if (response.error) {
             return res.status(200).json({ error: response.error });
@@ -83,7 +82,7 @@ router.post('/update-password', async (req, res) => {
     try {    
         const { email, password, ...tokenData } = req.body
         const hashedPassword = await getHashedPassword(password);
-        const response = await sellerServices.updatePassword(email, hashedPassword, tokenData);
+        const response = await userServices.updatePassword(email, hashedPassword, tokenData);
 
         if (response.error) {
             res.status(200).json({ error: response.error });
@@ -95,16 +94,16 @@ router.post('/update-password', async (req, res) => {
     }
 });
 
-router.put('/:sellerId', authenticateWithJWT, async (req, res) => {
+router.put('/:userId', authenticateWithJWT, async (req, res) => {
     try {
-        const sellerId = req.params.sellerId;
+        const userId = req.params.userId;
         const { password, ...rest } = req.body;
         const hashedPassword = await getHashedPassword(password);
-        const sellerData = {
+        const userData = {
             ...rest,
             password: hashedPassword,
         };
-        const response = await sellerServices.updateSeller(sellerId, sellerData);
+        const response = await userServices.updateUser(userId, userData);
         if (response.error) {
             res.status(200).json({ error: response.error });
         } else {
@@ -115,10 +114,10 @@ router.put('/:sellerId', authenticateWithJWT, async (req, res) => {
     }
 });
 
-router.delete('/:sellerId', authenticateWithJWT, async (req, res) => {
+router.delete('/:userId', authenticateWithJWT, async (req, res) => {
     try {
-        const sellerId = req.params.sellerId;
-        const response = await sellerServices.deleteSeller(sellerId);
+        const userId = req.params.userId;
+        const response = await userServices.deleteUser(userId);
         if (response.error) {
             res.status(200).json({ error: response.error });
         } else {
@@ -129,10 +128,10 @@ router.delete('/:sellerId', authenticateWithJWT, async (req, res) => {
     }
 });
 
-router.get('/:sellerId', authenticateWithJWT, async (req, res) => {
+router.get('/:userId', authenticateWithJWT, async (req, res) => {
     try {
-        const sellerId = req.params.sellerId;
-        const response = await sellerServices.getSellerById(sellerId);
+        const userId = req.params.userId;
+        const response = await userServices.getUserById(userId);
         if (response.error) {
             res.status(200).json({ error: response.error });
         } else {
