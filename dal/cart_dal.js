@@ -5,7 +5,7 @@ const getCartItemsByUser = async (userId) => {
         const cartItems = await CartItem.where({
             'user_id': userId
         }).fetchAll({
-            withRelated: [ 'product' ],
+            withRelated: [ 'product', 'product.seller' ],
             require: false
         });
         return cartItems

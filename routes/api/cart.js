@@ -4,7 +4,7 @@ const router = express.Router();
 const { authenticateWithJWT } = require('../../middlewares');
 const cartServices = require('../../services/cart_service');
 
-router.get('/user/:userId', async (req, res) => {
+router.get('/user/:userId', authenticateWithJWT, async (req, res) => {
     try {   
         const userId = req.params.userId;
         const response = await cartServices.getCartItemsByUser(userId);
@@ -16,7 +16,7 @@ router.get('/user/:userId', async (req, res) => {
     }
 })
 
-router.post('/',  async (req,res) => {
+router.post('/', authenticateWithJWT, async (req,res) => {
     try {
         const { quantity, ...cartData } = req.body
         const response = await cartServices.addToCart(quantity, cartData);
@@ -31,7 +31,7 @@ router.post('/',  async (req,res) => {
     }
 })
 
-router.put('/:cartId',  async (req,res) => {
+router.put('/:cartId', authenticateWithJWT, async (req,res) => {
     try {
         const cartId = req.params.cartId;
         const { quantity, ...cartData } = req.body
@@ -47,7 +47,7 @@ router.put('/:cartId',  async (req,res) => {
     }
 })
 
-router.delete('/:cartId',  async (req,res) => {
+router.delete('/:cartId', authenticateWithJWT, async (req,res) => {
     try {
         const cartId = req.params.cartId;
         const response = await cartServices.deleteCartItem(cartId);
