@@ -92,6 +92,14 @@ const updateProductDiscount = async (productId, discountData) => {
     }
 }
 
+const updateProductQuantity = async (productId, quantityPurchased) => {
+    try {
+        await productDataLayer.updateProductQuantity(productId, quantityPurchased);        
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 module.exports = {
     createProduct,
     getProductById,
@@ -100,5 +108,6 @@ module.exports = {
     getAllProducts,
     deleteProduct,
     updateProduct,
-    updateProductDiscount
+    updateProductDiscount,
+    updateProductQuantity
 }

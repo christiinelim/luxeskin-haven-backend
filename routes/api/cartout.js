@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const { authenticateWithJWT } = require('../../middlewares');
+const cartServices = require('../../services/cart_service');
+const productServices = require('../../services/product_service');
 const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 router.post('/', authenticateWithJWT, async (req, res) => {
@@ -17,7 +19,8 @@ router.post('/', authenticateWithJWT, async (req, res) => {
                     name: item.product.name,
                     images: [item.product.image],
                     metadata: {
-                        product_id: item.product.id
+                        product_id: item.product.id,
+                        cart_id: item.id
                     }
                 }
             }
@@ -42,7 +45,7 @@ router.post('/', authenticateWithJWT, async (req, res) => {
     }
 });
 
-router.post('/process_payment', express.raw({ type: 'application/json' }), async function (req, res) {
+router.post('/webhook', async (req, res) => {
     const payload = req.body;
     const endpointSecret = process.env.STRIPE_ENDPOINT_SECRET
 
@@ -63,15 +66,29 @@ router.post('/process_payment', express.raw({ type: 'application/json' }), async
             );
 
             const lineItems = await Stripe.checkout.sessions.listLineItems(stripeSession.id, {
-                expand: ['data.price.product']
+                expand: ['data.price', 'data.price.product']
             });
+            
+            lineItems.data.forEach(async (item) => {
+                // const priceId = item.price.id;
+                // const price = await Stripe.prices.retrieve(priceId);
 
-            console.log("Session =", session);
-            console.log("Line Items =", lineItems);
+                // delete from cart
+                const productId = item.price.product.id;
+                const product = await Stripe.products.retrieve(productId);
+                await cartServices.deleteCartItem(product.metadata.cart_id);
+
+                const purchasedQuantity = item.quantity;
+                const purchasedProductId = parseInt(product.metadata.product_id);
+
+                // update product stock
+                await productServices.updateProductQuantity(purchasedProductId, purchasedQuantity);
+            });
 
             res.json({ 'status': 'Success' })
         }
     } catch (error) {
+        console.log(error)
         res.status(500).json({ error })
     }
 })

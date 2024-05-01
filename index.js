@@ -17,6 +17,7 @@ wax.setLayoutPath('./views/layouts');
 
 app.use(cors()); // MUST BE BEFORE SESSIONS
 // app.use(cookieParser());
+app.use('/api/cartout/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json());
 app.set('view engine', 'hbs');
 app.use(express.static('public'));

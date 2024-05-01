@@ -94,6 +94,20 @@ const updateProduct = async (productId, productData) => {
     }
 }
 
+const updateProductQuantity = async (productId, quantityPurchased) => {
+    try {
+        const product = await getProductById(productId);
+        if (product) {
+            product.set({
+                stocks_on_hand: product.toJSON().stocks_on_hand - quantityPurchased
+            });
+            await product.save();
+        }
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 module.exports = {
     createProduct,
     getProductById,
@@ -101,5 +115,6 @@ module.exports = {
     getProductByDiscountId,
     getAllProducts,
     deleteProduct,
-    updateProduct
+    updateProduct,
+    updateProductQuantity
 }
