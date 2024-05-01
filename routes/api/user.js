@@ -97,12 +97,19 @@ router.post('/update-password', async (req, res) => {
 router.put('/:userId', authenticateWithJWT, async (req, res) => {
     try {
         const userId = req.params.userId;
-        const { password, ...rest } = req.body;
-        const hashedPassword = await getHashedPassword(password);
-        const userData = {
-            ...rest,
-            password: hashedPassword,
-        };
+        let userData
+
+        if (req.body.password) {
+            const { password, ...rest } = req.body;
+            const hashedPassword = await getHashedPassword(password);
+            userData = {
+                ...rest,
+                password: hashedPassword,
+            };
+        } else {
+            userData = { ...req.body };
+        }
+        
         const response = await userServices.updateUser(userId, userData);
         if (response.error) {
             res.status(200).json({ error: response.error });
