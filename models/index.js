@@ -67,7 +67,7 @@ const CartItem = bookshelf.model('CartItem',{
     product:function() {
         return this.belongsTo('Product');
     },
-    user:function() {
+    user: function() {
         return this.belongsTo('User');
     }
 })
@@ -77,6 +77,16 @@ const Order = bookshelf.model('Order', {
     products: function() {
         return this.belongsToMany('Product');
     }
+})
+
+const OrderProduct = bookshelf.model('OrderProduct', {
+    tableName: 'orders_products',
+    orders: function() {
+        return this.belongsTo('Order');
+    },
+    products: function() {
+        return this.belongsTo('Product');
+    },
 })
 
 module.exports = { 
@@ -89,5 +99,6 @@ module.exports = {
     Discount,
     User,
     CartItem,
-    Order
+    Order,
+    OrderProduct
 }

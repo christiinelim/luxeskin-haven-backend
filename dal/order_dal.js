@@ -1,4 +1,4 @@
-const { Order, Product } = require("../models");
+const { Order, OrderProduct } = require("../models");
 
 const createOrder = async (orderData) => {
     try {
@@ -69,10 +69,26 @@ const updateOrderProductPivot = async (data) => {
     } 
 }
 
+const getOrderProductPivot = async (orderId) => {
+    try {
+        console.log(orderId)
+        const orderProduct = await OrderProduct.where({ order_id: orderId }).fetchAll({
+            withRelated: ['products'],
+            require: true
+        });
+        return orderProduct
+
+    } catch (error) {
+        console.log(error)
+        throw new Error(error)
+    } 
+}
+
 module.exports = {
     createOrder,
     createOrderProductPivot,
     getOrderById,
     getOrderByUser,
-    updateOrderProductPivot
+    updateOrderProductPivot,
+    getOrderProductPivot
 }

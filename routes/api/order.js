@@ -47,4 +47,15 @@ router.put('/product', async (req, res) => {
     }
 });
 
+router.get('/product/:orderId', async (req, res) => {
+    try {
+        const orderId = req.params.orderId
+        const response = await orderServices.getOrderProductPivot(orderId);
+        res.status(200).json({ data: response });
+
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 module.exports = router;
