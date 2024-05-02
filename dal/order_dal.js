@@ -71,9 +71,8 @@ const updateOrderProductPivot = async (data) => {
 
 const getOrderProductPivot = async (orderId) => {
     try {
-        console.log(orderId)
         const orderProduct = await OrderProduct.where({ order_id: orderId }).fetchAll({
-            withRelated: ['products'],
+            withRelated: ['products', 'products.seller'],
             require: true
         });
         return orderProduct

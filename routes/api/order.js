@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const orderServices = require('../../services/order_service');
+const { authenticateWithJWT } = require('../../middlewares');
 
 router.post('/', async (req, res) => {
     try {
@@ -14,7 +15,7 @@ router.post('/', async (req, res) => {
     }
 });
 
-router.get('/:orderId', async (req, res) => {
+router.get('/:orderId', authenticateWithJWT, async (req, res) => {
     try {
         const orderId = req.params.orderId;
         const response = await orderServices.getOrderById(orderId);
@@ -25,7 +26,7 @@ router.get('/:orderId', async (req, res) => {
     }
 });
 
-router.get('/user/:userId', async (req, res) => {
+router.get('/user/:userId', authenticateWithJWT, async (req, res) => {
     try {
         const userId = req.params.userId;
         const response = await orderServices.getOrderByUser(userId);
@@ -36,7 +37,7 @@ router.get('/user/:userId', async (req, res) => {
     }
 });
 
-router.put('/product', async (req, res) => {
+router.put('/product', authenticateWithJWT, async (req, res) => {
     try {
         const { ...data } = req.body;
         const response = await orderServices.updateOrderProductPivot(data);
@@ -47,7 +48,7 @@ router.put('/product', async (req, res) => {
     }
 });
 
-router.get('/product/:orderId', async (req, res) => {
+router.get('/product/:orderId', authenticateWithJWT, async (req, res) => {
     try {
         const orderId = req.params.orderId
         const response = await orderServices.getOrderProductPivot(orderId);

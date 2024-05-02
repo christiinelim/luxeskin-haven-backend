@@ -40,6 +40,17 @@ const getSellerById = async (sellerId) => {
     }
 }
 
+const getSellers = async () => {
+    try {
+        const sellers = await Seller.fetchAll({
+            require: false
+        })
+        return sellers
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 const updateVerificationStatus = async (sellerId) => {
     try {
         const seller = await getSellerById(sellerId);
@@ -102,5 +113,6 @@ module.exports = {
     getSellerById,
     updatePassword,
     updateSeller,
-    deleteSeller
+    deleteSeller,
+    getSellers
 }

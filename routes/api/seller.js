@@ -143,6 +143,15 @@ router.get('/:sellerId', authenticateWithJWT, async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        const response = await sellerServices.getSellers();
+        res.status(200).json({ data: response });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 router.post('/refresh-token', authenticateJWTRefreshToken);
 
 router.post('/logout', authenticateWithJWT, async (req, res) => {

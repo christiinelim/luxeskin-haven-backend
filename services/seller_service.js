@@ -193,6 +193,15 @@ const getSellerById = async (sellerId) => {
     }
 }
 
+const getSellers = async () => {
+    try {
+        const response = await sellerDataLayer.getSellers();
+        return response
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 module.exports = {
     createSeller,
     getSellerByEmail,
@@ -203,5 +212,6 @@ module.exports = {
     updatePassword,
     updateSeller,
     deleteSeller,
-    getSellerById
+    getSellerById,
+    getSellers
 }
