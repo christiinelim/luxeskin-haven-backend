@@ -1,5 +1,6 @@
 const productDataLayer = require('../dal/product_dal');
-const skinTypesServices = require('../services/skin_types_services')
+const skinTypesServices = require('../services/skin_types_services');
+const { Product } = require("../models");
 
 const createProduct = async (skinTypes, productData) => {
     try {        
@@ -100,6 +101,46 @@ const updateProductQuantity = async (productId, quantityPurchased) => {
     }
 }
 
+const searchProducts = async (searchTerms) => {
+    try {
+        let queryBuilder = Product.collection(); 
+
+        if (searchTerms.minPrice) {
+            queryBuilder.where('cost', '>=', parseFloat(searchTerms.minPrice));
+        } 
+        
+        if (searchTerms.maxPrice) {
+            queryBuilder.where('cost', '<=', parseFloat(searchTerms.maxPrice));
+        } 
+        
+        if (searchTerms.selectedAvailability) {
+            if (searchTerms.selectedAvailability === "available") {
+                queryBuilder.where('stocks_on_hand', '>', 0);
+            } else {
+                queryBuilder.where('stocks_on_hand', '=', 0);
+            }
+        } 
+        
+        if (searchTerms.selectedCategories.length > 0) {
+            queryBuilder.where('category_id', 'in', searchTerms.selectedCategories);
+        } 
+        
+        if (searchTerms.selectedSellers.length > 0) {
+            queryBuilder.where('seller_id', 'in', searchTerms.selectedSellers);
+        }
+        
+        if (searchTerms.selectedSkinTypes.length > 0) {
+            queryBuilder.query('join', 'products_skin_types', 'products.id', 'product_id')
+                        .where('skin_type_id', 'in', searchTerms.selectedSkinTypes);
+        }
+
+        const response = await productDataLayer.searchProducts(queryBuilder);    
+        return response    
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 module.exports = {
     createProduct,
     getProductById,
@@ -109,5 +150,6 @@ module.exports = {
     deleteProduct,
     updateProduct,
     updateProductDiscount,
-    updateProductQuantity
+    updateProductQuantity,
+    searchProducts
 }

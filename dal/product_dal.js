@@ -108,6 +108,17 @@ const updateProductQuantity = async (productId, quantityPurchased) => {
     }
 }
 
+const searchProducts = async (queryBuilder) => {
+    try {
+        const products = await queryBuilder.fetch({
+            withRelated: ['category', 'skin_types', 'seller', 'discount']
+        });
+        return products
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 module.exports = {
     createProduct,
     getProductById,
@@ -116,5 +127,6 @@ module.exports = {
     getAllProducts,
     deleteProduct,
     updateProduct,
-    updateProductQuantity
+    updateProductQuantity,
+    searchProducts
 }

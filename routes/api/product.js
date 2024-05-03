@@ -120,4 +120,15 @@ router.put('/:productId', authenticateWithJWT, async (req, res) => {
     }
 });
 
+router.post('/search', async (req, res) => {
+    try {
+        const { ...searchTerms } = req.body;
+        const response = await productServices.searchProducts(searchTerms);
+        res.status(200).json({ data: response });
+
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 module.exports = router;
