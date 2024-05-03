@@ -19,7 +19,9 @@ exports.up = function(db) {
     id: { primaryKey: true, type: 'int', unsigned: true, autoIncrement: true },
     total_cost: { type:'decimal(10,2)', unsigned: true, notNull: true },
     created_at: { type: 'datetime', notNull: true },
-    user_id : {
+    name: { type:'string', length: 100, notNull: true },
+    address: { type:'string', length: 255, notNull: true },
+    user_id: {
       type: 'int', unsigned: true, 
       foreignKey: {
         name: 'orders_users_fk',

@@ -37,7 +37,7 @@ router.get('/user/:userId', authenticateWithJWT, async (req, res) => {
     }
 });
 
-router.get('/seller/:sellerId', async (req, res) => {
+router.get('/seller/:sellerId', authenticateWithJWT, async (req, res) => {
     try {
         const sellerId = req.params.sellerId;
         const response = await orderServices.getOrderBySeller(sellerId);

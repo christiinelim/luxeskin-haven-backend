@@ -9,7 +9,7 @@ const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 router.post('/', authenticateWithJWT, async (req, res) => {
     try {
-        const { user_id, items } = req.body;
+        const { user_id, name, address, items } = req.body;
 
         const lineItems = items.map((item) => ({
             quantity: item.quantity,
@@ -36,7 +36,9 @@ router.post('/', authenticateWithJWT, async (req, res) => {
             success_url: process.env.STRIPE_SUCCESS_URL,
             cancel_url: process.env.STRIPE_CANCEL_URL,
             metadata: {
-                user_id: user_id
+                user_id: user_id,
+                name: name,
+                address: address
             }
         }
 
@@ -96,7 +98,12 @@ router.post('/webhooks', async (req, res) => {
             }
         
             // create order
-            await orderServices.createOrder(products, { "user_id": session.metadata.user_id, "total_cost": (session.amount_total) / 100 });
+            await orderServices.createOrder(products, { 
+                user_id: session.metadata.user_id, 
+                address: session.metadata.address,
+                name: session.metadata.name,
+                total_cost: (session.amount_total) / 100,
+            });
                     
             res.json({ 'status': 'Success' })
         }

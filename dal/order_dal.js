@@ -1,5 +1,4 @@
-const { Order, OrderProduct, Product } = require("../models");
-const productDataLayer = require('../dal/product_dal');
+const { Order, OrderProduct } = require("../models");
 
 const createOrder = async (orderData) => {
     try {
@@ -60,9 +59,8 @@ const getOrderBySeller = async (sellerId) => {
             .query('whereIn', 'product_id', function() {
                 this.select('id').from('products').where('seller_id', sellerId);
             })
-            .orderBy('-order_id')
             .fetch({
-                withRelated: ['products']
+                withRelated: ['products', 'orders']
             });
 
         return orderProducts
@@ -73,14 +71,14 @@ const getOrderBySeller = async (sellerId) => {
 
 const updateOrderProductPivot = async (data) => {
     try {
-        const order = await Order.where({ id: data.order_id }).fetch();
-        await order.products().detach(data.product_id);
+        const orderProduct = await OrderProduct.where({
+            'id': data.id
+        }).fetch({
+            required: true
+        })
 
-        await order.products().attach({
-            product_id: data.product_id,
-            status: data.status,
-            quantity: data.quantity
-        });
+        orderProduct.set('status', data.status);
+        orderProduct.save()
 
     } catch (error) {
         throw new Error(error)
