@@ -38,6 +38,14 @@ const getOrderByUser = async (userId) => {
     }
 }
 
+const getOrderBySeller = async (sellerId) => {
+    try {
+        return await orderDataLayer.getOrderBySeller(sellerId);
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
 const updateOrderProductPivot = async (data) => {
     try {
         return await orderDataLayer.updateOrderProductPivot(data);
@@ -59,6 +67,7 @@ module.exports = {
     createOrderProductPivot,
     getOrderById,
     getOrderByUser,
+    getOrderBySeller,
     updateOrderProductPivot,
     getOrderProductPivot
 }

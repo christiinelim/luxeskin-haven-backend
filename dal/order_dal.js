@@ -1,4 +1,5 @@
-const { Order, OrderProduct } = require("../models");
+const { Order, OrderProduct, Product } = require("../models");
+const productDataLayer = require('../dal/product_dal');
 
 const createOrder = async (orderData) => {
     try {
@@ -53,6 +54,23 @@ const getOrderByUser = async (userId) => {
     } 
 }
 
+const getOrderBySeller = async (sellerId) => {
+    try {
+        const orderProducts = await OrderProduct.collection()
+            .query('whereIn', 'product_id', function() {
+                this.select('id').from('products').where('seller_id', sellerId);
+            })
+            .orderBy('-order_id')
+            .fetch({
+                withRelated: ['products']
+            });
+
+        return orderProducts
+    } catch (error) {
+        throw new Error(error)
+    } 
+}
+
 const updateOrderProductPivot = async (data) => {
     try {
         const order = await Order.where({ id: data.order_id }).fetch();
@@ -88,6 +106,7 @@ module.exports = {
     createOrderProductPivot,
     getOrderById,
     getOrderByUser,
+    getOrderBySeller,
     updateOrderProductPivot,
     getOrderProductPivot
 }

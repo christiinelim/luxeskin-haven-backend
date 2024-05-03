@@ -37,6 +37,17 @@ router.get('/user/:userId', authenticateWithJWT, async (req, res) => {
     }
 });
 
+router.get('/seller/:sellerId', async (req, res) => {
+    try {
+        const sellerId = req.params.sellerId;
+        const response = await orderServices.getOrderBySeller(sellerId);
+        res.status(200).json({ data: response });
+
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
 router.put('/product', authenticateWithJWT, async (req, res) => {
     try {
         const { ...data } = req.body;
