@@ -4,6 +4,7 @@ const router = express.Router();
 const { getHashedPassword, generateAccessToken } = require('../../utils');
 const { authenticateWithJWT, authenticateJWTRefreshToken } = require('../../middlewares');
 const userServices = require('../../services/user_service');
+const emailServices = require('../../services/email_service');
 const blacklistedTokenServices = require('../../services/blacklisted_tokens_service')
 
 router.post('/', async (req, res) => {
@@ -156,6 +157,16 @@ router.post('/logout', authenticateWithJWT, async (req, res) => {
         const { refreshToken } = req.body;
         await blacklistedTokenServices.createBlacklistedToken(refreshToken);
         res.status(200).json({ data: "Refresh token blacklisted" });
+
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+
+router.post('/contact', async (req, res) => {
+    try {
+        await emailServices.sendEmail(req.body);
+        res.status(200).json({ data: "Email sent" });
 
     } catch (error) {
         res.status(400).json({ error: error.message });

@@ -24,8 +24,23 @@ const sendTokenEmail = async (email) => {
         return verificationToken;
     } catch (error) {
         throw new Error(error)
-    }
-    
+    } 
 }
 
-module.exports = { sendTokenEmail }
+const sendEmail = async (data) => {
+    try {
+        const mailOptions = {
+            from: process.env.TOKEN_EMAIL,
+            to: 'bizordertest@gmail.com',
+            subject: data.subject,
+            html: `<p>Name: ${data.name}</p>
+                    <p>Contact: ${data.contact}</p>
+                    <p>Message: ${data.message}</p>`
+        };
+        await transporter.sendMail(mailOptions);
+    } catch (error) {
+        throw new Error(error)
+    } 
+}
+
+module.exports = { sendTokenEmail, sendEmail }
