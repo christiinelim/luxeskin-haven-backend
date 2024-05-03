@@ -105,6 +105,10 @@ const searchProducts = async (searchTerms) => {
     try {
         let queryBuilder = Product.collection(); 
 
+        if (searchTerms.name) {
+            queryBuilder.where('name', 'like', "%" + searchTerms.name + "%");
+        }
+
         if (searchTerms.minPrice) {
             queryBuilder.where('cost', '>=', parseFloat(searchTerms.minPrice));
         } 
@@ -121,15 +125,15 @@ const searchProducts = async (searchTerms) => {
             }
         } 
         
-        if (searchTerms.selectedCategories.length > 0) {
+        if (searchTerms.selectedCategories && searchTerms.selectedCategories.length > 0) {
             queryBuilder.where('category_id', 'in', searchTerms.selectedCategories);
         } 
         
-        if (searchTerms.selectedSellers.length > 0) {
+        if (searchTerms.selectedSellers && searchTerms.selectedSellers.length > 0) {
             queryBuilder.where('seller_id', 'in', searchTerms.selectedSellers);
         }
         
-        if (searchTerms.selectedSkinTypes.length > 0) {
+        if (searchTerms.selectedSkinTypes && searchTerms.selectedSkinTypes.length > 0) {
             queryBuilder.query('join', 'products_skin_types', 'products.id', 'product_id')
                         .where('skin_type_id', 'in', searchTerms.selectedSkinTypes);
         }
