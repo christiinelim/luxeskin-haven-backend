@@ -7,17 +7,20 @@
             <div class="col-12 col-md-7 signup-form-container">
                 <form method="POST" class="form-container">
                     <div class="signup-form">
-                        <div class="form-header">Login</div>
+                        <div class="verify-wrapper">
+                            <div class="form-header">Verify Your Email</div>
+                            <div class="verification-content">
+                                <div>A verification code has been sent to</div>
+                                <div class="verification-email">{{email}}</div>
+                            </div>
+                            <div class="verification-prompt">If you don't see it, you may have to check the spam folder. Please enter the code below to verify your email. The code will expire in 10 minutes.</div>
+                        </div>
                         {{{form}}}
                         {{#if error}}
                             <div class="form-message form-error-box"><i class="bi bi-exclamation-circle form-icon"></i>{{ error }}</div>
                         {{/if}}
-                        <input type="submit" value="Login" class="button-full button-long"/>
+                        <input type="submit" value="Verify" class="button-full button-long"/>
                         <input type="hidden" name="_csrf" value="{{csrfToken}}" />
-                        <div class="form-prompt">
-                            <div><a href="/forgot-password" class="forgot-password">Forgot Password</a></div>
-                            <div>Do not have an account? | <a href="/signup" class='form-action'>Sign Up</a></div>
-                        </div>
                     </div>
                 </form>
             </div>

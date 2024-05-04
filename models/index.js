@@ -11,6 +11,9 @@ const Token = bookshelf.model('Token', {
     },
     users: function() {
         return this.hasMany('User');
+    },
+    admins: function() {
+        return this.hasMany('Admin');
     }
 })
 
@@ -89,6 +92,10 @@ const OrderProduct = bookshelf.model('OrderProduct', {
     },
 })
 
+const Admin = bookshelf.model('Admin', {
+    tableName: 'admins'
+})
+
 module.exports = { 
     Seller, 
     Token, 
@@ -100,5 +107,6 @@ module.exports = {
     User,
     CartItem,
     Order,
-    OrderProduct
+    OrderProduct,
+    Admin
 }

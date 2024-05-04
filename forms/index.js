@@ -8,7 +8,7 @@ const bootstrapField = function (name, object) {
     if (!Array.isArray(object.widget.classes)) { object.widget.classes = []; }
 
     if (object.widget.classes.indexOf('form-control') === -1) {
-        object.widget.classes.push('form-control');
+        object.widget.classes.push('form-control form-input');
     }
 
     let validationclass = object.value && !object.error ? 'is-valid' : '';
@@ -22,7 +22,7 @@ const bootstrapField = function (name, object) {
     let error = object.error ? '<div class="invalid-feedback">' + object.error + '</div>' : '';
 
     let widget = object.widget.toHTML(name, object);
-    return '<div class="form-group mb-3 mb-md-4">' + label + widget + error + '</div>';
+    return '<div class="form-group-wrapper mb-2 mb-md-3">' + label + widget + error + '</div>';
 };
 
 const createSignupForm = () => {
@@ -36,17 +36,63 @@ const createSignupForm = () => {
         }),
         'password': fields.password({
             errorAfterField: true, required: validators.required('%s is required'),
-            validators: [validators.regexp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,32}$/)]
+            validators: [validators.regexp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,32}$/, "Password must be 8-32 characters, contain 1 uppercase, lowercase, number and special character")]
         }),
         'confirm_password': fields.password({
             label: 'Confirm Password', errorAfterField: true, required: validators.required('%s is required'),
             validators: [validators.matchField('password')],
-        }),
-        'contact': fields.number({
-            errorAfterField: true, required: validators.required('%s is required')
         })
-    })
+    }, { validatePastFirstError: true })
 }
 
+const createLoginForm = () => {
+    return forms.create({
+        'email': fields.email({
+            errorAfterField: true, required: validators.required('%s is required')
+        }),
+        'password': fields.password({
+            errorAfterField: true, required: validators.required('%s is required')
+        })
+    }, { validatePastFirstError: true })
+}
 
-module.exports = { createSignupForm, bootstrapField };
+const createVerificationForm = () => {
+    return forms.create({
+        'token': fields.number({
+            errorAfterField: true, required: validators.required('%s is required')
+        })
+    }, { validatePastFirstError: true })
+}
+
+const createForgotPasswordForm = () => {
+    return forms.create({
+        'email': fields.email({
+            errorAfterField: true, required: validators.required('%s is required')
+        })
+    }, { validatePastFirstError: true })
+}
+
+const createUpdatePasswordForm = () => {
+    return forms.create({
+        'token': fields.number({
+            errorAfterField: true, required: validators.required('%s is required')
+        }),
+        'password': fields.password({
+            errorAfterField: true, required: validators.required('%s is required'),
+            validators: [validators.regexp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,32}$/, "Password must be 8-32 characters, contain 1 uppercase, lowercase, number and special character")]
+        }),
+        'confirm_password': fields.password({
+            label: 'Confirm Password', errorAfterField: true, required: validators.required('%s is required'),
+            validators: [validators.matchField('password')],
+        })
+    }, { validatePastFirstError: true })
+}
+
+module.exports = { 
+    bootstrapField,
+    createSignupForm, 
+    createLoginForm,
+    createVerificationForm,
+    createForgotPasswordForm,
+    createUpdatePasswordForm
+};

@@ -1,4 +1,5 @@
-html, body, p, h1, h2, h3, h4, div {
+body {
+    height: 100%;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -6,118 +7,480 @@ html, body, p, h1, h2, h3, h4, div {
     font-size: 10px;
 }
 
-html, body, app-root {
-    height: 100%
+/* ALERT */
+.alert-class {
+    margin-bottom: 0px ;
 }
 
-/* nav */
-.navbar {
-    padding: 10px 20px;
-    height: 40px;
-    border-bottom: 1px solid black;
-}
-
-.navbar-logo {
-    font-size: 12px;
-    font-weight: bold;
-    text-decoration: none;
-    color: black
-}
-
-.navbar-logo:hover {
-    color: rgba(128,128,128,1)
-}
-
-button {
-    background-color: transparent;
+/* BUTTONS */
+.button-border,
+.button-full {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid black;
-    padding: 3px 5px;
     border-radius: 5px;
-    width: 50px
+    width: 55px;
+    height: 25px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
 }
 
-button:hover {
-    background-color: rgba(128,128,128,1);
-    border: 1px solid rgba(128,128,128,1);
-    color: white
-}
-
-.login-button {
-    margin-left: 5px;
+.button-full {
     background-color: black;
     color: white;
 }
 
+.button-full .link-items {
+    color: white;
+    text-decoration: none;
+}
+
+.button-border .link-items {
+    color: black;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.button-border:hover,
+.button-full:hover {
+    cursor: pointer;
+    background-color: rgba(128, 128, 128, 0.6);
+    border: 1px solid rgba(128, 128, 128, 0.6);
+    color: white
+}
+
+.button-border .link-items:hover {
+    color: white
+}
+
+.button-long {
+    width: 100% !important;
+}
+
+/* FORMS */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group-wrapper {
+    width: 100%;
+}
+
+.form-input {
+    height: 25px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    font-size: 10px;
+}
+
+.form-header {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.form-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.form-action {
+    color: rgba(241,101,101,1);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.form-action {
+    color: rgba(241,101,101,1);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.invalid-feedback {
+    font-size: 7px;
+    margin-top: 1px;
+}
+
+/* form error message */
+.form-message {
+    color: rgba(241,101,101,1);
+    font-size: 7px;
+    line-height: 8px;
+    margin-top: 2px
+}
+
+.form-icon {
+    margin-right: 2px
+}
+
+.form-error-box {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: rgba(114,28,36,1);
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 7px;
+    height: 25px;
+    width: 100%;
+}
+
+.form-success-box {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: rgba(21,87,36,1);
+    background-color: #d4edda;
+    position: relative;
+    border: 1px solid #c3e6cb;
+    border-radius: 5px;
+    padding: 7px;
+    height: 25px;
+    width: 100%;
+}
+
+/* NAVBAR */
+#logo {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.nav-login {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    border-bottom: 1px solid black;
+    padding: 20px 25px 5px 25px;
+    z-index: 101;
+}
+
+.login-items {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px
+}
+
+.content-items {
+    display: flex;
+    align-items: center;
+    gap: 15px
+}
+
+.nav-center {
+    margin-bottom: 2px;
+}
+
+/* SIGN UP */
+.signup-background {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 590px;
+}
+
+.signup-bg {
+    background-image: url('./images/main/signup.jpg');
+}
+
+.signup-form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 590px;
+    z-index: 100;
+}
+
+.signup-form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.3);
+    width: 300px;
+}
+
+/* LOGIN */
+.forgot-password {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.forgot-password:hover {
+    color: rgba(241,101,101,1);
+}
+
+.login-bg {
+    background-image: url('./images/main/login.jpg');
+}
+
+/* VERIFY */
+.verify-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px
+}
+
+.verification-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.verification-email {
+    font-weight: bold;
+}
+
+.verification-prompt {
+    margin-bottom: 25px;
+}
+
 @media (min-width: 576px) {
-    html, body, p, h1, h2, h3, h4, div {
+    body {
+        font-size: 10px;
+    }
+
+    /* BUTTONS */
+    .button-border,
+    .button-full {
+        width: 65px;
+        height: 28px;
+    }
+
+    /* FORM */
+    .form-container {
+        gap: 12px
+    }
+
+    .form-input {
+        height: 28px;
         font-size: 11px;
     }
 
-    /* nav */
-    .navbar {
-        padding: 15px 25px;
-        height: 55px;
+    .form-header {
+        font-size: 15px;
+        margin-bottom: 10px;
     }
 
-    .navbar-logo {
-        font-size: 14px;
+    .invalid-feedback {
+        font-size: 8px;
     }
 
-    button {
-        padding: 5px 7px;
-        width: 60px
+    /* form error message */
+    .form-message {
+        font-size: 8px;
+        line-height: 9px
     }
 
-    .login-button {
-        margin-left: 8px;
+    .form-error-box,
+    .form-success-box {
+        height: 28px;
+        padding: 10px;
+    }
+
+    .form-icon {
+        margin-right: 3px
+    }
+
+    /* NAVBAR */
+    #logo {
+        font-size: 15px;
+    }
+
+    .nav-login {
+        padding: 25px 30px 10px 30px;
+    }
+
+    /* SIGN UP */
+    .signup-background {
+        height: 600px;
+    }
+
+    .signup-form-container {
+        height: 600px;
+    }
+
+    .signup-form {
+        width: 400px;
+        padding: 40px;
+    }
+
+    .nav-center {
+        margin-bottom: 4px;
     }
 }
 
 @media (min-width: 768px) {
-    html, body, p, h1, h2, h3, h4, div {
+    body {
+        font-size: 11px;
+    }
+
+    /* BUTTONS */
+    .button-border,
+    .button-full {
+        width: 67px;
+        height: 30px;
+        margin-top: 16px;
+    }
+
+    /* FORM */
+    .form-input {
+        height: 28px;
         font-size: 12px;
     }
 
-    /* nav */
-    .navbar {
-        padding: 20px 30px;
-        height: 65px;
+    .form-header {
+        font-size: 16px;
+        margin-bottom: 12px;
     }
 
-    .navbar-logo {
-        font-size: 15px;
+    .invalid-feedback {
+        font-size: 9px;
+        margin-top: 2px;
     }
 
-    button {
-        padding: 6px 8px;
-        width: 70px
+    /* form error message */
+    .form-message {
+        font-size: 9px;
+        line-height: 10px
     }
 
-    .login-button {
-        margin-left: 10px;
+    .form-error-box,
+    .form-success-box {
+        gap: 4px;
+        height: 30px;
+        padding: 13px;
+    }
+
+    .form-icon {
+        margin-right: 4px
+    }
+
+    /* NAVBAR */
+    #logo {
+        font-size: 16px;
+    }
+
+    .nav-login {
+        padding: 25px 30px 10px 30px;
+    }
+
+    .login-items {
+        gap: 15px
+    }
+
+    .content-items {
+        gap: 17px
+    }
+
+    /* SIGN UP */
+    .signup-background {
+        height: 620px;
+    }
+    
+    .signup-form-container {
+        height: 620px;
+    }
+
+    .signup-form {
+        width: 400px;
+        padding: 30px 35px;
+    }
+
+    /* VERIFY */
+    .verify-wrapper {
+        gap: 17px
+    }
+
+    .verification-prompt {
+        margin-bottom: 27px;
     }
 }
 
 @media (min-width: 992px) {
-    html, body, p, h1, h2, h3, h4, div {
+    body {
+        font-size: 12px;
+    }
+
+    /* BUTTONS */
+    .button-border,
+    .button-full {
+        width: 70px;
+        height: 32px;
+    }
+
+    /* FORM */
+    .form-input {
+        height: 34px;
         font-size: 13px;
     }
 
-    /* nav */
-    .navbar {
-        padding: 20px 30px;
-        height: 65px;
+    .form-header {
+        font-size: 17px;
+    }
+    
+    .form-prompt {
+        margin-top: 12px;
     }
 
-    .navbar-logo {
-        font-size: 16px;
+    .invalid-feedback {
+        font-size: 10px;
     }
 
-    button {
-        width: 75px
+    /* form error message */
+    .form-message {
+        font-size: 10px;
+        line-height: 11px
     }
 
-    .login-button {
-        margin-left: 10px;
+    .form-error-box,
+    .form-success-box {
+        height: 28px;
+        padding: 15px;
+    }
+
+    .form-icon {
+        margin-right: 5px
+    }
+
+    /* NAVBAR */
+    #logo {
+        font-size: 17px;
+    }
+
+    .nav-login {
+        padding: 30px 40px 10px 40px;
+    }
+
+    .login-items {
+        gap: 20px
+    }
+
+    /* SIGN UP */
+    .signup-background {
+        height: 640px;
+    }
+
+    .signup-form-container {
+        height: 640px;
+    }
+
+    .signup-form {
+        width: 420px;
     }
 }
