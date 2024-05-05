@@ -26,10 +26,16 @@
                 deleteConfirmation.style.display = 'none';
                 const csrfToken = document.getElementById('csrf-token').value;
                 axios.defaults.headers.common['X-CSRF-Token'] = csrfToken;
-                axios.delete('/products/delete/' + idToDelete);
 
-                const deletedRow = document.querySelector(`[data-product-id="${idToDelete}"]`).closest('tr');
-                deletedRow.remove();
+                const warningAction = '{{warning.action}}';
+
+                if (warningAction === 'delete') {
+                    axios.delete('/products/delete/' + idToDelete);
+                    const deletedRow = document.querySelector(`[data-id="${idToDelete}"]`).closest('tr');
+                    deletedRow.remove();
+                } else if (warningAction === 'blacklist') {
+                } 
+
             } catch (error) {
                 console.log(error)
             }
