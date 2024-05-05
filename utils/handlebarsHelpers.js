@@ -12,4 +12,12 @@ hbs.registerHelper('formatCost', (cost) => {
     return `$${cost.toFixed(2)}`;
 });
 
+hbs.registerHelper('component', (partial, options) => {
+    const template = hbs.compile(hbs.partials[partial]);
+    const html = template(options.hash);
+    return new hbs.SafeString(html);
+});
+
+hbs.registerPartial('deletePopupScript', '<script type="text/javascript"></script>');
+
 module.exports = hbs;

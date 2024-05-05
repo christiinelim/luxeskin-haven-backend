@@ -9,7 +9,7 @@
                     ID
                 </th>
                 <th>
-                    Image
+                    Product
                 </th>
                 <th>
                     Cost
@@ -32,7 +32,10 @@
                         {{this.id}}
                     </td>
                     <td>
-                        <img src="{{this.image}}" alt="{{this.name}}" class="image-wrapper">
+                        <div>
+                            <div  class="product-name">{{this.name}}</div>
+                            <div><img src="{{this.image}}" alt="{{this.name}}" class="image-wrapper"></div>
+                        </div>
                     </td>
                     <td>
                         {{formatCost this.cost}}
@@ -44,13 +47,21 @@
                         {{this.category.category}}
                     </td>
                     <td>
-                        <a href="/products/update-product/{{this.id}}" class="button-full button-danger">Delete</a>
+                        <div class="button-full button-danger" 
+                                data-product-id="{{this.id}}" 
+                                data-product-name="{{this.name}}">Delete</div>
                     </td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
+
+        {{> deletePopupTemplate}}
     </div>
+{{/block}}
+
+{{#block "js"}}
+    {{> deletePopupScript}}
 {{/block}}
 
 {{/extends}}

@@ -64,7 +64,6 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-    console.log(req.session.user)
     const loginForm = createLoginForm();
     try {
         loginForm.handle(req, {
@@ -86,6 +85,7 @@ router.post('/login', (req, res) => {
                         username: response.username,
                         email: response.email
                     }
+                    console.log(req.session.user)
                     req.flash('success_messages', `Welcome back ${response.username}`);
                     res.redirect('/');
                 }

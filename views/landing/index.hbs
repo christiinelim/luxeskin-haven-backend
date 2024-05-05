@@ -44,13 +44,21 @@
                         {{formatDate this.created_at}}
                     </td>
                     <td>
-                        <a href="/products/update-product/{{this.id}}" class="button-full button-danger">Blacklist</a>
+                        <div class="button-full button-danger"
+                                data-product-id="{{this.id}}" 
+                                data-product-name="{{this.username}}">Blacklist</div>
                     </td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
+
+         {{> deletePopupTemplate}}
     </div>
+{{/block}}
+
+{{#block "js"}}
+    {{> deletePopupScript}}
 {{/block}}
 
 {{/extends}}

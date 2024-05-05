@@ -1,0 +1,23 @@
+<div class="delete-popup">
+    <div class='overlay delete-up'>
+        <div class='delete-content'>
+            <div class='delete-header'>{{warning.header}}</div>
+            <div>Are you sure you want to {{warning.action}} <span class='delete-item'></span>?</div>
+            <div class='warning-content-container'>
+                <div class='warning-side'></div>
+                <div class='warning-content'>
+                    <div class='warning-header-content'>
+                        <div><i class='bi bi-exclamation-triangle-fill warning-icon'></i></div>
+                        <div class='warning-header'>Warning</div>
+                    </div>
+                    <div class='warning-description'>{{warning.message}}</div>
+                </div>
+            </div>
+            <div class='warning-action'>
+                <button type="button" id='warning-action-cancel' class='button-border'>Cancel</button>
+                <button type="button" id='warning-action-confirm' class='button-full'>Confirm</button>
+            </div>
+            <input type="hidden" id="csrf-token" value="{{ csrfToken }}">
+        </div>
+    </div>
+</div>

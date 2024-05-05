@@ -1,5 +1,6 @@
 const express = require('express');
 const hbs = require('hbs');
+const path = require('path');
 const handlebarsHelpers = require('./utils/handlebarsHelpers');
 const wax = require('wax-on');
 const cors = require('cors');
@@ -13,6 +14,8 @@ const app = express();
 
 wax.on(hbs.handlebars);
 wax.setLayoutPath('./views/layouts');
+
+hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
 app.use(cors());
 app.use('/api/cartout/webhooks', express.raw({ type: 'application/json' }));
