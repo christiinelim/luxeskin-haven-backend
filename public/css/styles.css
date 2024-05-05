@@ -183,6 +183,11 @@ a {
     gap: 8px;
 }
 
+.form-label {
+    color: rgba(128, 128, 128, 1);
+    margin-top: 10px;
+}
+
 .form-group-wrapper {
     width: 100%;
 }

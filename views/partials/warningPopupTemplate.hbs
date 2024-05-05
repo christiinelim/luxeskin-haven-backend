@@ -13,11 +13,17 @@
                     <div class='warning-description'>{{warning.message}}</div>
                 </div>
             </div>
+            {{#ifEquals warning.action "blacklist"}}
+                <div>
+                    <label class="form-label">Reason</label>
+                    <textarea class="form-control form-input reason-input"></textarea>
+                </div>
+            {{/ifEquals}}
             <div class='warning-action'>
                 <button type="button" id='warning-action-cancel' class='button-border'>Cancel</button>
                 <button type="button" id='warning-action-confirm' class='button-full'>Confirm</button>
             </div>
-            <input type="hidden" id="csrf-token" value="{{ csrfToken }}">
+            <input type="hidden" id="csrf-token" value="{{csrfToken}}">
         </div>
     </div>
 </div>

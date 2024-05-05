@@ -2,23 +2,20 @@
 
 {{#block "content"}}
     <div class="seller-wrapper">
-        <div class="page-header">Sellers List</div>
+        <div class="page-header">Blacklisted List</div>
         <table class="table">
             <thead>
                 <th>
-                    ID
+                    Seller ID
                 </th>
                 <th>
                     Username
                 </th>
                 <th>
-                    Email
+                    Reason
                 </th>
                 <th>
-                    Contact
-                </th>
-                <th>
-                    Date Joined
+                    Blacklisted Date
                 </th>
                 <th>
 
@@ -26,19 +23,16 @@
             </thead>
 
             <tbody>
-                {{#each sellers}}
+                {{#each blacklistedSellers}}
                 <tr>
                     <td>
-                        {{this.id}}
+                        {{this.seller_id}}
                     </td>
                     <td>
-                        {{this.username}}
+                        {{this.sellers.username}}
                     </td>
                     <td>
-                        {{this.email}}
-                    </td>
-                    <td>
-                        {{this.contact}}
+                        {{this.reason}}
                     </td>
                     <td>
                         {{formatDate this.created_at}}
@@ -46,7 +40,8 @@
                     <td>
                         <div class="button-full button-danger"
                                 data-id="{{this.id}}" 
-                                data-name="{{this.username}}">Blacklist</div>
+                                data-name="{{this.sellers.username}}"
+                                data-seller-id="{{this.seller_id}}">Remove</div>
                     </td>
                 </tr>
                 {{/each}}

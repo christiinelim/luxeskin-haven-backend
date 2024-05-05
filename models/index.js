@@ -96,6 +96,13 @@ const Admin = bookshelf.model('Admin', {
     tableName: 'admins'
 })
 
+const BlacklistedSeller = bookshelf.model('BlacklistedSeller', {
+    tableName: 'blacklisted_sellers',
+    sellers: function() {
+        return this.belongsTo('Seller');
+    }
+})
+
 module.exports = { 
     Seller, 
     Token, 
@@ -108,5 +115,6 @@ module.exports = {
     CartItem,
     Order,
     OrderProduct,
-    Admin
+    Admin,
+    BlacklistedSeller
 }

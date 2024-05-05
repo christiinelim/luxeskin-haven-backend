@@ -87,7 +87,7 @@ router.post('/login', (req, res) => {
                     }
                     console.log(req.session.user)
                     req.flash('success_messages', `Welcome back ${response.username}`);
-                    res.redirect('/');
+                    res.redirect('/sellers');
                 }
             },
             'empty': (form) => {
