@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
     {{!-- Custom CSS --}}
-    <link rel="stylesheet" href="styles.css"></link>
+    <link rel="stylesheet" href="/css/styles.css"></link>
 
     {{!-- Font --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,14 +35,14 @@
             {{#if user}}
                 <div class="nav-center">Hello, {{user.username}}</div>
                 <div class='button-full'>
-                    <a href="/logout" class="link-items">Logout</a>
+                    <a href="/admin/logout" class="link-items">Logout</a>
                 </div>
             {{else}}
                 <div class='button-border'>
-                    <a href="/signup" class='link-items'>Sign Up</a>
+                    <a href="/admin/signup" class='link-items'>Sign Up</a>
                 </div>
                 <div class='button-full'>
-                    <a href="/login" class='link-items'>Login</a>
+                    <a href="/admin/login" class='link-items'>Login</a>
                 </div>
             {{/if}}
         </div>

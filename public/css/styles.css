@@ -193,7 +193,7 @@ body {
 }
 
 .signup-bg {
-    background-image: url('./images/main/signup.jpg');
+    background-image: url('../images/main/signup.jpg');
 }
 
 .signup-form-container {
@@ -225,7 +225,7 @@ body {
 }
 
 .login-bg {
-    background-image: url('./images/main/login.jpg');
+    background-image: url('../images/main/login.jpg');
 }
 
 /* VERIFY */

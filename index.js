@@ -70,7 +70,8 @@ app.use((err, req, res, next) => {
 })
 
 main = async () => {
-    const adminRoutes = require('./routes/admin');
+    const landingRoutes = require('./routes/landing');
+    const adminRoutes = require('./routes/admin');    
 
     const api = {
         sellerRoutes: require('./routes/api/seller'),
@@ -82,8 +83,9 @@ main = async () => {
         orderRoutes: require('./routes/api/order')
     }
 
-    app.use('/', adminRoutes);
-
+    app.use('/', landingRoutes);
+    app.use('/admin', adminRoutes);
+    
     app.use('/api/seller', api.sellerRoutes);
     app.use('/api/product', api.productRoutes);
     app.use('/api/discount', api.discountRoutes);

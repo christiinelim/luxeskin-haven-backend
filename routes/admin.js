@@ -64,6 +64,7 @@ router.get('/login', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
+    console.log(req.session.user)
     const loginForm = createLoginForm();
     try {
         loginForm.handle(req, {
@@ -80,13 +81,16 @@ router.post('/login', (req, res) => {
                         })
                     }
                 } else {
+                    console.log("here")
+                    console.log(req.session)
                     req.session.user = {
                         id: response.id,
                         username: response.username,
                         email: response.email
                     }
+                    console.log(req.session)
                     req.flash('success_messages', `Welcome back ${response.username}`);
-                    res.redirect('/signup');
+                    res.redirect('/');
                 }
             },
             'empty': (form) => {
@@ -263,7 +267,7 @@ router.post('/reset-password', (req, res) => {
 router.get('/logout',  (req, res) => {
     req.session.user = null;
     req.flash('success_messages', 'Goodbye, you have been logged out')
-    res.redirect('/login')
+    res.redirect('/admin/login')
 })
 
 module.exports = router;
