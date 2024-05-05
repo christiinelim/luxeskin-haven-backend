@@ -7,6 +7,17 @@ body {
     font-size: 10px;
 }
 
+a {
+    text-decoration: none;
+}
+
+/* PAGE HEADER */
+.page-header {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
 /* ALERT */
 .alert-class {
     margin-bottom: 0px ;
@@ -57,6 +68,14 @@ body {
 
 .button-long {
     width: 100% !important;
+}
+
+.button-danger {
+    background-color: #dc3545;
+    border: 1px solid #dc3545;
+    margin-top: 0px;
+    width: 50px;
+    height: 23px;
 }
 
 /* FORMS */
@@ -156,6 +175,11 @@ body {
     font-weight: bold;
 }
 
+#admin-platform-logo {
+    font-size: 12px;
+    margin-bottom: 1px;
+}
+
 .nav-login {
     display: flex;
     justify-content: space-between;
@@ -250,9 +274,30 @@ body {
     margin-bottom: 25px;
 }
 
+/* SELLER LIST */
+.seller-wrapper {
+    margin: 30px 40px;
+}
+
+/* PRODUCT LIST */
+.product-wrapper {
+    margin: 30px 40px;
+}
+
+.image-wrapper {
+    width: 30px;
+    height: 40px
+}
+
 @media (min-width: 576px) {
     body {
         font-size: 10px;
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+        font-size: 13px;
+        margin-bottom: 25px;
     }
 
     /* BUTTONS */
@@ -260,6 +305,12 @@ body {
     .button-full {
         width: 65px;
         height: 28px;
+    }
+
+    .button-danger {
+        margin-top: 0px;
+        width: 55px;
+        height: 25px;
     }
 
     /* FORM */
@@ -302,6 +353,10 @@ body {
         font-size: 15px;
     }
 
+    #admin-platform-logo {
+        font-size: 13px;
+    }
+
     .nav-login {
         padding: 25px 30px 10px 30px;
     }
@@ -323,11 +378,27 @@ body {
     .nav-center {
         margin-bottom: 4px;
     }
+
+    /* PRODUCT LIST */
+    .product-wrapper {
+        margin: 30px 60px;
+    }
+
+    .image-wrapper {
+        width: 50px;
+        height: 60px
+    }
 }
 
 @media (min-width: 768px) {
     body {
         font-size: 11px;
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+        font-size: 14px;
+        margin-bottom: 30px;
     }
 
     /* BUTTONS */
@@ -336,6 +407,12 @@ body {
         width: 67px;
         height: 30px;
         margin-top: 16px;
+    }
+
+    .button-danger {
+        margin-top: 0px;
+        width: 60px;
+        height: 27px;
     }
 
     /* FORM */
@@ -376,6 +453,11 @@ body {
         font-size: 16px;
     }
 
+    #admin-platform-logo {
+        font-size: 13px;
+        margin-bottom: 2px;
+    }
+
     .nav-login {
         padding: 25px 30px 10px 30px;
     }
@@ -410,6 +492,21 @@ body {
     .verification-prompt {
         margin-bottom: 27px;
     }
+
+    /* SELLER LIST */
+    .seller-wrapper {
+        margin: 35px 50px;
+    }
+
+    /* PRODUCT LIST */
+    .product-wrapper {
+        margin: 35px 80px;
+    }
+
+    .image-wrapper {
+        width: 70px;
+        height: 80px
+    }
 }
 
 @media (min-width: 992px) {
@@ -417,11 +514,22 @@ body {
         font-size: 12px;
     }
 
+    /* PAGE HEADER */
+    .page-header {
+        font-size: 15px;
+    }
+
     /* BUTTONS */
     .button-border,
     .button-full {
         width: 70px;
         height: 32px;
+    }
+    
+    .button-danger {
+        margin-top: 0px;
+        width: 65px;
+        height: 30px;
     }
 
     /* FORM */
@@ -463,6 +571,10 @@ body {
         font-size: 17px;
     }
 
+    #admin-platform-logo {
+        font-size: 14px;
+    }
+
     .nav-login {
         padding: 30px 40px 10px 40px;
     }
@@ -482,5 +594,20 @@ body {
 
     .signup-form {
         width: 420px;
+    }
+
+    /* SELLER LIST */
+    .seller-wrapper {
+        margin: 40px 60px;
+    }
+
+    /* PRODUCT LIST */
+    .product-wrapper {
+        margin: 40px 100px;
+    }
+
+    .image-wrapper {
+        width: 90px;
+        height: 110px
     }
 }

@@ -81,14 +81,11 @@ router.post('/login', (req, res) => {
                         })
                     }
                 } else {
-                    console.log("here")
-                    console.log(req.session)
                     req.session.user = {
                         id: response.id,
                         username: response.username,
                         email: response.email
                     }
-                    console.log(req.session)
                     req.flash('success_messages', `Welcome back ${response.username}`);
                     res.redirect('/');
                 }

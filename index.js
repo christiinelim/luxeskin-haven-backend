@@ -1,5 +1,6 @@
 const express = require('express');
 const hbs = require('hbs');
+const handlebarsHelpers = require('./utils/handlebarsHelpers');
 const wax = require('wax-on');
 const cors = require('cors');
 const session = require('express-session');

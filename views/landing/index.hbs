@@ -1,0 +1,56 @@
+{{#extends "base"}}
+
+{{#block "content"}}
+    <div class="seller-wrapper">
+        <div class="page-header">Sellers List</div>
+        <table class="table">
+            <thead>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Username
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Contact
+                </th>
+                <th>
+                    Date Joined
+                </th>
+                <th>
+
+                </th>
+            </thead>
+
+            <tbody>
+                {{#each sellers}}
+                <tr>
+                    <td>
+                        {{this.id}}
+                    </td>
+                    <td>
+                        {{this.username}}
+                    </td>
+                    <td>
+                        {{this.email}}
+                    </td>
+                    <td>
+                        {{this.contact}}
+                    </td>
+                    <td>
+                        {{formatDate this.created_at}}
+                    </td>
+                    <td>
+                        <a href="/products/update-product/{{this.id}}" class="button-full button-danger">Blacklist</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+{{/block}}
+
+{{/extends}}

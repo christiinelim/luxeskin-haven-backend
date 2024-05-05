@@ -1,0 +1,56 @@
+{{#extends "base"}}
+
+{{#block "content"}}
+    <div class="product-wrapper">
+        <div class="page-header">Products List</div>
+        <table class="table">
+            <thead>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Image
+                </th>
+                <th>
+                    Cost
+                </th>
+                <th>
+                    Availability
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+
+                </th>
+            </thead>
+
+            <tbody>
+                {{#each products}}
+                <tr>
+                    <td>
+                        {{this.id}}
+                    </td>
+                    <td>
+                        <img src="{{this.image}}" alt="{{this.name}}" class="image-wrapper">
+                    </td>
+                    <td>
+                        {{formatCost this.cost}}
+                    </td>
+                    <td>
+                        {{this.stocks_on_hand}}
+                    </td>
+                    <td>
+                        {{this.category.category}}
+                    </td>
+                    <td>
+                        <a href="/products/update-product/{{this.id}}" class="button-full button-danger">Delete</a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+{{/block}}
+
+{{/extends}}
