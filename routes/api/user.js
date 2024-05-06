@@ -152,7 +152,7 @@ router.get('/:userId', authenticateWithJWT, async (req, res) => {
 
 router.post('/refresh-token', authenticateJWTRefreshToken);
 
-router.post('/logout', authenticateWithJWT, async (req, res) => {
+router.post('/logout', async (req, res) => {
     try {
         const { refreshToken } = req.body;
         await blacklistedTokenServices.createBlacklistedToken(refreshToken);

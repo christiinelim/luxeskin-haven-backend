@@ -10,6 +10,7 @@ const authenticateWithJWT = (req, res, next) => {
         try {
             jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET, (error, payload) => {
                 if (error) {
+                    console.log(error)
                     res.status(401).json({ error });
                 } else {
                     req.payload = payload;
@@ -20,7 +21,7 @@ const authenticateWithJWT = (req, res, next) => {
             res.status(500).json({ error: 'Internal Server Error' });
         }
     } else {
-        res.status(401).json({ error: "Unauthorized, please login" });
+        res.status(401).json({ error: "Unauthorized, invalid access token" });
     }
 };
 
