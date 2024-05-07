@@ -10,7 +10,6 @@ const authenticateWithJWT = (req, res, next) => {
         try {
             jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET, (error, payload) => {
                 if (error) {
-                    console.log(error)
                     res.status(401).json({ error });
                 } else {
                     req.payload = payload;

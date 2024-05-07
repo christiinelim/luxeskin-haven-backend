@@ -55,9 +55,11 @@ const getProductByDiscountId = async (discountId) => {
     }
 }
 
-const getAllProducts = async () => {
+const getAllProducts = async (pageNumber) => {
     try {
-        const products = await Product.fetchAll({
+        const products = await Product.fetchPage({
+            pageSize: 12,
+            page: pageNumber,
             withRelated: ['category', 'skin_types', 'seller', 'discount'],
             require: true
         })

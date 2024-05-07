@@ -49,9 +49,9 @@ const getProductByDiscountId = async (discountId) => {
     }
 }
 
-const getAllProducts = async () => {
+const getAllProducts = async (pageNumber) => {
     try {
-        const response = await productDataLayer.getAllProducts();
+        const response = await productDataLayer.getAllProducts(pageNumber);
         return response
     } catch (error) {
         throw new Error(error)
@@ -138,6 +138,10 @@ const searchProducts = async (searchTerms) => {
                         .where('skin_type_id', 'in', searchTerms.selectedSkinTypes);
         }
 
+        if (searchTerms.limit) {
+            queryBuilder.query({ limit: searchTerms.limit })
+        }
+        
         const response = await productDataLayer.searchProducts(queryBuilder);    
         return response    
     } catch (error) {

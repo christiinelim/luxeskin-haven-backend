@@ -94,7 +94,6 @@ const getOrderProductPivot = async (orderId) => {
         return orderProduct
 
     } catch (error) {
-        console.log(error)
         throw new Error(error)
     } 
 }

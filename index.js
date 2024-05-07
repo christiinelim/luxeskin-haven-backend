@@ -30,7 +30,7 @@ app.use(
 
 app.use(session({
     store: new FileStore(),
-    secret: 'keyboard cat', // TO CHANGE
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
 }));

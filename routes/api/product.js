@@ -65,10 +65,15 @@ router.get('/seller/:sellerId', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
+router.get('/page/:pageNumber', async (req, res) => {
     try {
-        const response = await productServices.getAllProducts();
-        res.status(200).json({ data: response });
+        const pageNumber = req.params.pageNumber;
+        const response = await productServices.getAllProducts(pageNumber);
+        const pages = response.pagination.pageCount;
+        res.status(200).json({ data: {
+            products: response,
+            pages
+        } });
     } catch (error) {
         res.status(400).json({ error: error.message });
     }
