@@ -22,6 +22,14 @@ hbs.registerHelper('component', (partial, options) => {
     return new hbs.SafeString(html);
 });
 
+hbs.registerHelper('range', (count, options) => {
+    const ret = [];
+    for (let i = 1; i <= count; i++) {
+        ret.push(i);
+    }
+    return ret;
+});
+
 hbs.registerPartial('deletePopupScript', '<script type="text/javascript"></script>');
 
 module.exports = hbs;

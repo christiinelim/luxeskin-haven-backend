@@ -56,6 +56,12 @@
             </tbody>
         </table>
 
+        <div class="pagination-wrapper">
+            {{#each (range pagination.pageCount)}}
+                <div class="page"><a href="/products?page={{this}}" class="page">{{this}}</a></div>
+            {{/each}}
+        </div>
+
         {{> warningPopupTemplate}}
     </div>
 {{/block}}

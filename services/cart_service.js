@@ -44,7 +44,8 @@ const updateCartItem = async (cartId, quantity, cartData) => {
     try {
         const product = await productServices.getProductById(cartData.product_id);
         if (product.toJSON().stocks_on_hand < quantity) {
-            return { error: "Insufficient stock"}
+            return { error: "Insufficient stock",
+                        stocks_on_hand: product.toJSON().stocks_on_hand }
         }
 
         const existingCartItem = await cartDataLayer.getCartItemById(cartId);

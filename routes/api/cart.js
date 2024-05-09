@@ -37,7 +37,8 @@ router.put('/:cartId', authenticateWithJWT, async (req,res) => {
         const { quantity, ...cartData } = req.body
         const response = await cartServices.updateCartItem(cartId, quantity, cartData);
         if (response.error) {
-            res.status(200).json({ error: response.error });
+            res.status(200).json({ error: response.error,
+                                    stocks_on_hand: response.stocks_on_hand });
         } else {
             res.status(200).json({ data: response });
         }

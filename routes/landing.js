@@ -27,7 +27,8 @@ router.get('/sellers', async (req, res) => {
 // product list
 router.get('/products', async (req, res) => {
     try {
-        const productData = await productServices.getAllProducts();
+        const page = parseInt(req.query.page) || 1; 
+        const productData = await productServices.getAllProducts(page);
 
         res.render('landing/products', {
             products: productData.toJSON(),
@@ -35,6 +36,10 @@ router.get('/products', async (req, res) => {
                 action: 'delete',
                 message: 'By deleting the product, it will be removed from all platforms and the seller will lose the listing.',
                 header: 'Delete Product'
+            },
+            pagination: {
+                pageCount: productData.pagination.pageCount,
+                currentPage: page
             }
         });
     } catch (error) {
