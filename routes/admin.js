@@ -35,7 +35,7 @@ router.post('/signup', (req, res) => {
                     })
                 } else {
                     req.flash('success_messages', "Your account has been created successfully!");
-                    res.redirect(`/verify?email=${formData.email}&adminId=${response.toJSON().id}`);
+                    res.redirect(`/admin/verify?email=${formData.email}&adminId=${response.toJSON().id}`);
                 }
             },
             'empty': (form) => {
@@ -72,7 +72,7 @@ router.post('/login', (req, res) => {
                 if (response.error) {
                     if (response.error === "Account not verified") {
                         req.flash('error_messages', "Please verify account to login");
-                        res.redirect(`/verify?email=${response.data.email}&adminId=${response.data.id}`);
+                        res.redirect(`/admin/verify?email=${response.data.email}&adminId=${response.data.id}`);
                     } else {
                         res.render('admin/login', {
                             form: form.toHTML(bootstrapField),
@@ -140,7 +140,7 @@ router.post('/verify', (req, res) => {
                     })
                 } else {
                     req.flash('success_messages', "Account has been verified!");
-                    res.redirect('/login');
+                    res.redirect('/admin/login');
                 }
             },
             'empty': (form) => {
@@ -186,7 +186,7 @@ router.post('/forgot-password', (req, res) => {
                     })
                 } else {
                     req.flash('success_messages', "Reset token has been sent!");
-                    res.redirect(`/reset-password?email=${response.email}&adminId=${response.id}`);
+                    res.redirect(`/admin/reset-password?email=${response.email}&adminId=${response.id}`);
                 }
             },
             'empty': (form) => {

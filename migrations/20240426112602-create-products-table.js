@@ -20,7 +20,7 @@ exports.up = function(db) {
     name: { type:'string', length: 255, notNull: true },
     image: { type: 'string', length: 255, notNull: true },
     stocks_on_hand: { type:'int', unsigned: true, notNull: true },
-    cost: { type:'decimal(10,2)', unsigned: true, notNull: true },
+    cost: { type: 'decimal', precision: 10, scale: 2, unsigned: true, notNull: true },
     description: { type:'text', notNull: true },
     ingredients: { type:'text', notNull: true },
     refund_policy: { type:'text', notNull: true },

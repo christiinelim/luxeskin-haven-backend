@@ -17,7 +17,8 @@ exports.setup = function(options, seedLink) {
 exports.up = function(db) {
   return db.createTable('orders', {
     id: { primaryKey: true, type: 'int', unsigned: true, autoIncrement: true },
-    total_cost: { type:'decimal(10,2)', unsigned: true, notNull: true },
+    // total_cost: { type:'decimal(10,2)', unsigned: true, notNull: true },
+    total_cost: { type: 'decimal', precision: 10, scale: 2, unsigned: true, notNull: true },
     created_at: { type: 'datetime', notNull: true },
     name: { type:'string', length: 100, notNull: true },
     address: { type:'string', length: 255, notNull: true },

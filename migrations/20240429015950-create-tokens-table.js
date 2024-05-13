@@ -19,7 +19,7 @@ exports.up = function(db) {
     id: { primaryKey: true, type: 'int', unsigned: true, autoIncrement: true },
     type: { type:'string', length: 50, notNull: true },
     profile: { type:'string', length: 50, notNull: true },
-    token: { type: 'int', unsigned: true, length: 20, notNull: true },
+    token: { type: 'int', unsigned: true, notNull: true },
     created_at: { type: 'datetime', notNull: true },
     expires_at: { type: 'datetime', notNull: true },
     seller_id : {
