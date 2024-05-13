@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const cloudinary = require('cloudinary').v2;
 
 const getHashedPassword = async (password) => {
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -26,15 +25,8 @@ const generateAccessToken = (id, email, tokenSecret, expiry) => {
     })
 };
 
-// cloudinary.config({
-//     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//     api_key: process.env.CLOUDINARY_API_KEY,
-//     api_secret: process.env.CLOUDINARY_API_SECRET
-// });
-
 module.exports = {
     getHashedPassword,
     comparePasswords,
     generateAccessToken,
-    // cloudinary
 }
