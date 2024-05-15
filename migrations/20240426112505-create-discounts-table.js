@@ -18,7 +18,7 @@ exports.up = function(db) {
   return db.createTable('discounts', {
     id : { type: 'int', unsigned: true, primaryKey: true, autoIncrement: true },
     // discount_percentage: { type: 'decimal(5,2)', unsigned: true, notNull: true },
-    discount_percentage: { type: 'decimal', precision: 5, scale: 2, unsigned: true, notNull: true },
+    discount_percentage: { type: 'decimal', precision: '5', scale: '2', notNull: true },
     start_date: { type: 'date', notNull: true },
     end_date: { type: 'date', notNull: true }
   });
