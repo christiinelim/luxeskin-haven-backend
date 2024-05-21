@@ -5,16 +5,13 @@ LuxeSkin Haven is an e-commerce platform dedicated to providing luxurious skinca
 
 The backend API handles data management, user authentication, order processing, and communication with external services like Stripe for payment processing.
 
+## Deployment
+- Deployed React Frontend: <a href="https://luxeskin-haven.netlify.app/">https://luxeskin-haven.netlify.app/</a>
+- Deployed Backend Admin Dashboard: <a href="https://luxeskin-haven-backend.onrender.com/admin/login">https://luxeskin-haven-backend.onrender.com/admin/login</a>
+
+## Repository
 - GitHub Repository for Frontend (ReactJS): <a href="https://github.com/christiinelim/luxeskin-haven">Link</a>
 - GitHub Repository for Backend (Express, NodeJs, Handlebars, Caolan form, bookshelf ORM): <a href="https://github.com/christiinelim/luxeskin-haven-backend">Link</a>
-
-
-<!-- ## Target Audience and Objectives
-The target audience for LuxeSkin Haven Backend includes:
-- Administrator: Responsible for managing sellers, products, orders, and user data.
-
-Objectives:
-- Enable administrator to oversee the platform, manage user accounts, handle disputes, and ensure compliance with policies. -->
 
 ## Database Schema (SQL)
 The backend utilizes an SQL database with the following schema:
@@ -45,6 +42,7 @@ The base URL for all endpoints is `https://your-api-domain.com/api/user`.
 | `/:userId`          | GET    | Get user information by ID           | -                                                  | Status 200 with data or Status 400 with error message          |
 | `/refresh-token`    | POST   | Refresh access token                 | `{ "refreshToken": "<refresh_token>" }`            | Status 200 with new access token or Status 400 with error message |
 | `/logout`           | POST   | Logout                               | `{ "refreshToken": "<refresh_token>" }`            | Status 200 with success message or Status 400 with error message |
+| `/contact`         | POST   | Send a contact email       | `{ "name": "User Name", "email": "user@example.com", "message": "Your message here" }`                 | Status 200 with `{"data": "Email sent"}` or Status 400 with error message     |
 
 
 ### Cart API Documentation
@@ -97,17 +95,17 @@ The base URL for all endpoints is `https://your-api-domain.com/api/seller`.
 ### Product API Documentation
 The base URL for all endpoints is `https://your-api-domain.com/api/product`.
 
-| Endpoint                             | Method | Description                                  | Request Body                                               | Response Body                                                    |
-|--------------------------------------|--------|----------------------------------------------|------------------------------------------------------------|-------------------------------------------------------------------|
-| `/`                       | POST   | Create a new product                         | `{ "skin_types": ["type1", "type2"], "name": "Product Name", "description": "Product Description", "price": 100.00, "sellerId": "sellerId", "categoryId": "categoryId" }` | Status 200 with product data or Status 400 with error message     |
-| `/categories`            | GET    | Get all product categories                   | -                                                          | Status 200 with category data or Status 400 with error message    |
-| `/skin-types`            | GET    | Get all skin types                           | -                                                          | Status 200 with skin types data or Status 400 with error message  |
-| `/:productId`            | GET    | Get product by ID                            | -                                                          | Status 200 with product data or Status 400 with error message     |
-| `/public/:productId`     | GET    | Get public product by ID                     | -                                                          | Status 200 with product data or Status 400 with error message     |
-| `/seller/:sellerId`      | GET    | Get products by seller ID                    | -                                                          | Status 200 with product data or Status 400 with error message     |
-| `/`                       | GET    | Get all products                             | -                                                          | Status 200 with product data or Status 400 with error message     |
-| `/:productId`            | DELETE | Delete product by ID                         | -                                                          | Status 200 with success message or Status 400 with error message  |
-| `/:productId`            | PUT    | Update product by ID                         | `{ "skin_types": ["type1", "type2"], "name": "Updated Product Name", "description": "Updated Product Description", "price": 150.00, "categoryId": "updatedCategoryId" }` | Status 200 with updated product data or Status 400 with error message |
+| Endpoint                  | Method  | Description                      | Request Body                                                                                       | Response Body                                                                 |
+|---------------------------|---------|----------------------------------|----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| `/`                       | POST    | Create a new product             | `{ "skin_types": ["oily", "dry"], "name": "Product Name", "price": 29.99, ... }`                    | Status 200 with product data or Status 400 with error message                 |
+| `/categories`             | GET     | Get all categories               | -                                                                                                  | Status 200 with category data or Status 400 with error message                |
+| `/skin-types`             | GET     | Get all skin types               | -                                                                                                  | Status 200 with skin type data or Status 400 with error message               |
+| `/:productId`             | GET     | Get product by ID                | -                                                                                                  | Status 200 with product data or Status 400 with error message                 |
+| `/seller/:sellerId`       | GET     | Get products by seller ID        | -                                                                                                  | Status 200 with product data or Status 400 with error message                 |
+| `/page/:pageNumber`       | GET     | Get products by page number      | -                                                                                                  | Status 200 with products data and page count or Status 400 with error message |
+| `/:productId`             | DELETE  | Delete a product by ID           | -                                                                                                  | Status 200 with success message or Status 400 with error message              |
+| `/:productId`             | PUT     | Update a product by ID           | `{ "skin_types": ["oily", "dry"], "name": "Updated Product Name", "price": 39.99, ... }`           | Status 200 with updated product data or Status 400 with error message         |
+| `/search`                 | POST    | Search for products              | `{ "name": "search term", "category": "category id", "priceRange": [minPrice, maxPrice], ... }`    | Status 200 with search results or Status 400 with error message               |
 
 ### Discount API Documentation
 The base URL for all endpoints is `https://your-api-domain.com/api/discount`.
@@ -122,7 +120,3 @@ The base URL for all endpoints is `https://your-api-domain.com/api/discount`.
 ## Technologies Used
 - Backend: Express.js, Bookshelf ORM, db-migrate, Stripe, Handlebars (hbs), Caolan form
 - Frontend: React, Cloudinary
-
-<!-- ## Live Links
-- [React Frontend](link-to-react-frontend)
-- [Backend Admin Dashboard](link-to-backend-admin) -->
